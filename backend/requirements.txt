@@ -1,0 +1,18 @@
+# Web framework 
+fastapi==0.115.5
+uvicorn[standard]==0.32.1
+
+# Database 
+sqlalchemy==2.0.36
+psycopg2-binary==2.9.10
+
+# Auth 
+google-auth==2.36.0
+python-jose[cryptography]==3.3.0 
+
+# Validation / settings 
+pydantic[email]==2.10.3
+python-dotenv==1.0.1
+
+# HTTP client
+requests==2.32.3
