@@ -143,7 +143,7 @@ VALID_GRADES: frozenset[str] = frozenset(GRADE_POINTS.keys())
 
 # Pydantic Schemas
 
-class SunjectEntry(BaseModel):
+class SubjectEntry(BaseModel):
     name: str = Field(..., min_length=1, max_length=75, examples=["Data Structures & Algorithms"])
     credits: float = Field(..., ge=0.0, le=5.0, 
                            description="Supports fractional credits (e.g. 1.5, 3.0).",
