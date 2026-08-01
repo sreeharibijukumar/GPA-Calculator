@@ -6,6 +6,8 @@ frontend/.env
 backend/venv/
 backend/.venv/
 backend/__pycache__/
+backend/app/__pycache__/
+backend/app/routes/__pycache__/
 backend/.env
 
 *.md

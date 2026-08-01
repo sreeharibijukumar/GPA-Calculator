@@ -91,7 +91,7 @@ class Semester(Base):
     )
     user_id: Mapped[uuid.UUID] = mapped_column(
         UUID(as_uuid=True),
-        ForeignKey("user.id", ondelete="CASCADE"),
+        ForeignKey("users.id", ondelete="CASCADE"),
         nullable=False, index=True,
     )
     semester_number: Mapped[int] = mapped_column(
@@ -104,7 +104,7 @@ class Semester(Base):
     )
     subjects: Mapped[list[dict[str, Any]]] = mapped_column(
         JSON, nullable=False, default=list,
-        comment="JSONB array of {name, credits, grade} obejcts.",
+        comment="JSONB array of {name, credits, grade} objects.",
     )
     sgpa: Mapped[float] = mapped_column(
         nullable=False, default=0.0,
