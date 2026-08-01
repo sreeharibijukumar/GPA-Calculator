@@ -66,7 +66,7 @@ def get_cgpa(
     return CgpaResponse(
         cgpa=compute_cgpa(sgpa_list),
         total_semesters=len(rows),
-        semesters_sgpa=[
+        semester_sgpas=[
             {"semester_number": r.semester_number,
              "semester_label": r.semester_label,
              "sgpa": r.sgpa}

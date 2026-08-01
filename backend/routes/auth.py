@@ -15,10 +15,10 @@ from app.models import User, UserResponse, GoogleAuthRequest, TokenResponse
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
-GOOGLR_CLIENT_ID: str = os.environ["GOOGLE_CLIENT_ID"]
+GOOGLE_CLIENT_ID: str = os.environ["GOOGLE_CLIENT_ID"]
 APP_SECRET_KEY: str = os.environ["APP_SECRET_KEY"]
 ALGORITHM: str = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES", "8"))
+ACCESS_TOKEN_EXPIRE_HOURS: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_HOURS", "8"))
 
 bearer_scheme = HTTPBearer(auto_error=False)
 
@@ -27,7 +27,7 @@ def _verify_google_token(credential: str) -> dict:
         claims: dict = google_id_token.verify_oauth2_token(
             id_token=credential,
             request=google_requests.Request(),
-            audience=GOOGLR_CLIENT_ID,
+            audience=GOOGLE_CLIENT_ID,
             clock_skew_in_seconds=10,
         )
     except ValueError as exc:
@@ -69,7 +69,7 @@ def _create_access_token(user: User) -> str:
         "sub": str(user.id),
         "email": user.email,
         "iat": now,
-        "exp": now + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES),
+        "exp": now + timedelta(hours=ACCESS_TOKEN_EXPIRE_HOURS),
     }
     return jwt.encode(payload, APP_SECRET_KEY, algorithm=ALGORITHM)
 

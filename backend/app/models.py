@@ -49,25 +49,25 @@ class User(Base):
         Boolean,
         default=True,
         nullable=False,
-        sever_default="true",
+        server_default="true",
     )
 
     created_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        sever_default=func.now()
+        server_default=func.now()
     )
 
     updated_at: Mapped[datetime] = mapped_column(
         DateTime(timezone=True),
         nullable=False,
-        sever_default=func.now(),
+        server_default=func.now(),
         onupdate=lambda: datetime.now(timezone.utc)
     )
 
     semesters: Mapped[list["Semester"]] = relationship(
         "Semester",
-        back_poplutates="user",
+        back_populates="user",
         cascade="all, delete-orphan",
         lazy="select",
         order_by="Semester.semester_number"
