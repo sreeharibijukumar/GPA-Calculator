@@ -36,7 +36,7 @@ def _verify_google_token(credential: str) -> dict:
             detail=f"Invalid Google credential: {exc}",
         ) from exc
 
-    if claims.get("iss") not in ["accounts.google.com", "https://accounts.google.com"]:
+    if claims.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token issuer is not Google.",
