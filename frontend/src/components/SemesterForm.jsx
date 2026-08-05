@@ -4,7 +4,6 @@ import SubjectRow from "./SubjectRow";
 import { Badge, Button, Card, GpaRing } from "./ui";
 import { blankSubject, computeSgpa, getPerformanceTag } from "../utils/grading";
 
-
 export default function SemesterForm({
   initialData = null,
   semesterNumber = 1,
@@ -121,10 +120,10 @@ export default function SemesterForm({
           <div style={{ minWidth: 0 }}>
             <input
               type="text"
-              placeholder={`Semester ${semesterNumber} label (optional)`}
+              placeholder={`Semester ${semesterNumber}`}
               value={label}
               onChange={(e) => setLabel(e.target.value)}
-              maxLength={64}
+              maxLength={25}
               style={{
                 background: "transparent",
                 border: "none",

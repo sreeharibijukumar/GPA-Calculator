@@ -57,7 +57,7 @@ export default function Navbar() {
           >
             <GraduationCap size={17} color="#fff" strokeWidth={2} />
           </div>
-          GPA CAL
+          GPA CALCULATOR
           <span
             style={{
               fontSize: "11px",

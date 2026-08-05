@@ -13,15 +13,15 @@ export const GRADE_POINTS = {
 export const VALID_GRADES = Object.keys(GRADE_POINTS)
 
 export const GRADE_LABELS = {
-  S:        'S  — Outstanding (10)',
-  A:        'A  — Excellent   (9)',
-  B:        'B  — Very Good   (8)',
-  C:        'C  — Good        (7)',
-  D:        'D  — Above Avg   (6)',
-  E:        'E  — Average     (4)',
-  F:        'F  — Fail        (0)',
-  Absent:   'Absent           (0)',
-  Complete: 'Complete  (Completed)',
+  S:        'S  — Outstanding',
+  A:        'A  — Excellent',
+  B:        'B  — Very Good',
+  C:        'C  — Good',
+  D:        'D  — Above Avg',
+  E:        'E  — Average',
+  F:        'F  — Fail',
+  Absent:   'Absent',
+  Complete: 'Completed',
 }
 
 export const GRADE_COLORS = {
