@@ -1,111 +1,119 @@
 :root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+  /* Backgrounds */
+  --bg-base:        #0B0F19;
+  --bg-card:        #151F32;
+  --bg-card-hover:  #1A2640;
+  --bg-input:       #0F1824;
+  --bg-overlay:     rgba(11, 15, 25, 0.85);
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
+  /* Borders */
+  --border:         #1E2D45;
+  --border-focus:   #6366F1;
+  --border-subtle:  #162030;
 
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
+  /* Electric Indigo — primary actions */
+  --indigo-500:     #6366F1;
+  --indigo-400:     #818CF8;
+  --indigo-600:     #4F46E5;
+  --indigo-glow:    rgba(99, 102, 241, 0.15);
+
+  /* Neon Emerald — GPA results, success states */
+  --emerald-500:    #10B981;
+  --emerald-400:    #34D399;
+  --emerald-glow:   rgba(16, 185, 129, 0.12);
+
+  /* Status colours */
+  --red-500:        #EF4444;
+  --red-glow:       rgba(239, 68, 68, 0.12);
+  --amber-400:      #FBBF24;
+
+  /* Text hierarchy */
+  --text-primary:   #F1F5F9;   /* headings, important values */
+  --text-secondary: #94A3B8;   /* body text, labels */
+  --text-muted:     #4A5C72;   /* placeholders, captions */
+  --text-inverse:   #0B0F19;   /* text on light backgrounds */
+
+  /* Typography */
+  --font-sans:  'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono:  'JetBrains Mono', 'Fira Code', monospace;
+
+  /* Border radius scale */
+  --radius-sm:  6px;
+  --radius-md:  10px;
+  --radius-lg:  14px;
+  --radius-xl:  20px;
+
+  /* Transitions */
+  --transition:      150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Shadows */
+  --shadow-card:    0 1px 3px rgba(0,0,0,0.4), 0 0 0 1px var(--border);
+  --shadow-elevated:0 4px 24px rgba(0,0,0,0.5), 0 0 0 1px var(--border);
+  --shadow-indigo:  0 0 0 3px var(--indigo-glow);
+  --shadow-emerald: 0 0 20px var(--emerald-glow);
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-base);
+  color: var(--text-primary);
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+}
+#root { min-height: 100vh; display: flex; flex-direction: column; }
 
-  @media (max-width: 1024px) {
-    font-size: 16px;
+/* ── Typography ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600; line-height: 1.25; letter-spacing: -0.02em; color: var(--text-primary);
+}
+p { color: var(--text-secondary); }
+a { color: var(--indigo-400); text-decoration: none; transition: color var(--transition); }
+a:hover { color: var(--indigo-500); }
+code, kbd, pre, samp { font-family: var(--font-mono); font-size: 0.875em; }
+
+/* ── Custom scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ── Utility classes ──────────────────────────────────────────────────────── */
+.mono { font-family: var(--font-mono); }
+.text-primary   { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-muted     { color: var(--text-muted); }
+.text-indigo    { color: var(--indigo-400); }
+.text-emerald   { color: var(--emerald-400); }
+.text-red       { color: var(--red-500); }
+
+/* ── Keyframe animations ──────────────────────────────────────────────────── */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-12px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.animate-fade-in  { animation: fadeIn var(--transition-slow) both; }
+.animate-slide-in { animation: slideIn var(--transition-slow) both; }
+
+/* ── Accessibility ────────────────────────────────────────────────────────── */
+:focus-visible { outline: 2px solid var(--indigo-500); outline-offset: 2px; }
+::selection { background: var(--indigo-glow); color: var(--indigo-400); }
+
+/* ── Reduced motion ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
-
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
-}
-
-body {
-  margin: 0;
-}
-
-#root {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
-}
-
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
-}
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
-}
-p {
-  margin: 0;
-}
-
-code,
-.counter {
-  font-family: var(--mono);
-  display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
 }
