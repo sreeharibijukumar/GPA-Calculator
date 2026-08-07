@@ -7,7 +7,7 @@ from sqlalchemy import (
     Boolean, DateTime, ForeignKey,
     String, Text, UniqueConstraint,
 )
-from sqlalchemy.dialects.postgresql import JSON, UUID
+from sqlalchemy.dialects.postgresql import JSONB, UUID
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from sqlalchemy.sql import func
 
@@ -103,7 +103,7 @@ class Semester(Base):
         comment="Optional label e.g. '3rd Year/1st Sem'.",
     )
     subjects: Mapped[list[dict[str, Any]]] = mapped_column(
-        JSON, nullable=False, default=list,
+        JSONB, nullable=False, default=list,
         comment="JSONB array of {name, credits, grade} objects.",
     )
     sgpa: Mapped[float] = mapped_column(

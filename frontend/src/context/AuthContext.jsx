@@ -1,4 +1,4 @@
-import { React, createContext, useCallback, useContext, useEffect, useRef, useState, } from 'react'
+import { createContext, useCallback, useContext, useEffect, useRef, useState, } from 'react'
 import { authApi, clearToken, setToken } from '../utils/api'
 
 const AuthContext = createContext(null)
@@ -52,7 +52,7 @@ export function AuthProvider({ children }) {
                 return
             }
             window.google.accounts.id.initialize({
-                client_Id: clientId,
+                client_id: clientId,
                 callback: (response) => login(response.credential),
                 auto_select: false,
                 cancel_on_tap_outside: true,

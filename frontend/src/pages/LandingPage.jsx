@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ArrowRight, BookOpen, Cloud, Lock, Zap } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
@@ -52,10 +52,10 @@ export default function LandingPage() {
   };
 
   // Redirect authenticated users to their dashboard
-  if (isAuthenticated) {
-    navigate("/dashboard", { replace: true });
-    return null;
-  }
+  useEffect(() => {
+    if (isAuthenticated) navigate("/dashboard", { replace: true })
+  }, [isAuthenticated, navigate])
+  if (isAuthenticated) return null
 
   return (
     <main style={{ flex: 1 }}>

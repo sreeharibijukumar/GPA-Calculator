@@ -52,7 +52,7 @@ export default function SubjectRow({
           placeholder={`Subject ${index + 1}`}
           value={subject.name}
           onChange={(e) => onChange({ ...subject, name: e.target.value })}
-          maxLength={200}
+          maxLength={75}
           style={{
             ...inputBase,
             border: `1px solid ${error.name ? "var(--red-500)" : "var(--border)"}`,

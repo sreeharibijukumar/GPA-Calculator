@@ -11,7 +11,8 @@ from app.routes.auth import router as auth_router
 from app.routes.semesters import router as semesters_router
 
 FRONTEND_URL: str = os.environ.get("FRONTEND_URL", "http://localhost:5173")
-CORS_ORIGINS: list[str] = [FRONTEND_URL, "https://*.vercel.app",]
+CORS_ORIGINS: list[str] = [FRONTEND_URL]
+CORS_ORIGIN_REGEX: str = r"^https://([a-zA-Z0-9-]+\.)*vercel\.app$"
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
@@ -32,6 +33,7 @@ def create_app() -> FastAPI:
     app.add_middleware(
         CORSMiddleware,
         allow_origins=CORS_ORIGINS,
+        allow_origin_regex=CORS_ORIGIN_REGEX,
         allow_credentials=True,
         allow_methods=["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
         allow_headers=["Authorization", "Content-Type"],
