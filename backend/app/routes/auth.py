@@ -21,12 +21,13 @@ ALGORITHM: str = "HS256"
 ACCESS_TOKEN_EXPIRE_HOURS: int = int(os.getenv("ACCESS_TOKEN_EXPIRE_HOURS", "8"))
 
 bearer_scheme = HTTPBearer(auto_error=False)
+_google_request = google_requests.Request()
 
 def _verify_google_token(credential: str) -> dict:
     try:
         claims: dict = google_id_token.verify_oauth2_token(
             id_token=credential,
-            request=google_requests.Request(),
+            request=_google_request,
             audience=GOOGLE_CLIENT_ID,
             clock_skew_in_seconds=10,
         )

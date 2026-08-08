@@ -45,12 +45,20 @@ export function AuthProvider({ children }) {
             return
         }
 
-        // Poll until the async GSI script has loaded
-        const init = () => {
+        let cancelled = false
+
+        const setup = () => {
+            if (cancelled) return
             if (!window.google?.accounts?.id) {
-                setTimeout(init, 100)
+                console.warn('[AuthContext] GSI script "load" fired but google.accounts.id is unavailble.')
+                setIsLoading(false)
                 return
             }
+            if (window.__gsiInitialized) {
+                setIsLoading(false)
+                return
+            }
+
             window.google.accounts.id.initialize({
                 client_id: clientId,
                 callback: (response) => login(response.credential),
@@ -58,9 +66,26 @@ export function AuthProvider({ children }) {
                 cancel_on_tap_outside: true,
                 itp_support: true,
             })
+            window.__gsiInitialized = true
             setIsLoading(false)
         }
-        init()
+
+        if (window.google?.accounts?.id) {
+            setup()
+            return () => { cancelled = true }
+        }
+
+        const script = document.getElementById('google-gsi')
+        if (!script) {
+            console.warn('[AuthContext] #google-gsi script tag not found in index.html.')
+            setIsLoading(false)
+            return
+        }
+        script.addEventListener('load', setup, { once: true})
+        return () => {
+            cancelled = true
+            script.removeEventListener('load', setup)
+        }
     }, [login])
 
     useEffect(() => {
@@ -69,13 +94,21 @@ export function AuthProvider({ children }) {
         return () => window.removeEventListener('auth:unauthorized', handle)
     }, [logout])
 
-    const promptOneTap = useCallback(() => {
-        window.google?.accounts?.id?.prompt()
+    const renderSignInButton = useCallback((container, options = {}) => {
+        if (!container || !window.google?.accounts?.id) return
+        window.google.accounts.id.renderButton(container, {
+            type: 'standard',
+            theme: 'filled_black',
+            size: 'large',
+            shape: 'pill',
+            logo_alignment: 'left',
+            ...options,
+        })
     }, [])
 
     return (
         <AuthContext.Provider value={{
-            user, isAuthenticated: !!user, isLoading, authError, login, logout, promptOneTap,
+            user, isAuthenticated: !!user, isLoading, authError, login, logout, renderSignInButton,
         }}>
             {children}
         </AuthContext.Provider>

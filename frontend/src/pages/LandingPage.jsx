@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { Badge, Button, Card, GpaRing } from "../components/ui";
 import SemesterForm from "../components/SemesterForm";
 import { computeCgpa, computeSgpa } from "../utils/grading";
+import GoogleSignInButton from "../components/GoogleSignInButton";
 
 const FEATURES = [
   {
@@ -30,7 +31,7 @@ const FEATURES = [
 ];
 
 export default function LandingPage() {
-  const { isAuthenticated, promptOneTap } = useAuth();
+  const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const [guestSgpas, setGuestSgpas] = useState([]);
   const [activeSem, setActiveSem] = useState(1);
@@ -53,9 +54,9 @@ export default function LandingPage() {
 
   // Redirect authenticated users to their dashboard
   useEffect(() => {
-    if (isAuthenticated) navigate("/dashboard", { replace: true })
-  }, [isAuthenticated, navigate])
-  if (isAuthenticated) return null
+    if (isAuthenticated) navigate("/dashboard", { replace: true });
+  }, [isAuthenticated, navigate]);
+  if (isAuthenticated) return null;
 
   return (
     <main style={{ flex: 1 }}>
@@ -79,7 +80,8 @@ export default function LandingPage() {
             letterSpacing: "-0.04em",
             lineHeight: 1.1,
             marginBottom: "20px",
-            background: "linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%)",
+            background:
+              "linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             backgroundClip: "text",
@@ -119,9 +121,11 @@ export default function LandingPage() {
           >
             Start calculating <ArrowRight size={16} />
           </Button>
-          <Button variant="secondary" size="lg" onClick={promptOneTap}>
-            Sign in to save results
-          </Button>
+          <GoogleSignInButton>
+            <Button variant="secondary" size="lg">
+              Sign in to save results
+            </Button>
+          </GoogleSignInButton>
         </div>
       </section>
 
@@ -310,13 +314,12 @@ export default function LandingPage() {
             style={{ textAlign: "center", marginTop: "20px" }}
             className="animate-fade-in"
           >
-            <Button
-              variant="primary"
-              onClick={promptOneTap}
-              style={{ gap: "10px" }}
-            >
-              Sign in with Google to save your progress <ArrowRight size={15} />
-            </Button>
+            <GoogleSignInButton>
+              <Button variant="primary" style={{ gap: "10px" }}>
+                Sign in with Google to save your progress{" "}
+                <ArrowRight size={15} />
+              </Button>
+            </GoogleSignInButton>
           </div>
         )}
       </section>
