@@ -1,4 +1,4 @@
-import { forwardRef } from "react";
+import { forwardRef, useEffect } from "react";
 
 const BUTTON_VARIANTS = {
   primary: {
@@ -128,6 +128,47 @@ export function Card({
       {...props}
     >
       {children}
+    </div>
+  );
+}
+
+// Simple centred Modal
+export function Modal({ open, onClose, title, children, dismissible = true }) {
+  useEffect(() => {
+    if (!open || !dismissible) return;
+    const onKey = (e) => { if (e.key === "Escape") onClose?.(); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open, dismissible, onClose]);
+
+  if (!open) return null;
+
+  return (
+    <div
+      style={{
+        position: "fixed", inset: 0, zIndex: 100,
+        background: "var(--bg-overlay)", backdropFilter: "blur(4px)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: "24px",
+      }}
+      onClick={dismissible ? onClose : undefined}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="animate-fade-in"
+        style={{
+          background: "var(--bg-card)", border: "1px solid var(--border)",
+          borderRadius: "var(--radius-lg)", padding: "28px",
+          width: "100%", maxWidth: "440px", maxHeight: "85vh", overflowY: "auto",
+        }}
+      >
+        {title && (
+          <h2 style={{ fontSize: "18px", fontWeight: 700, marginBottom: "18px", color: "var(--text-primary)" }}>
+            {title}
+          </h2>
+        )}
+        {children}
+      </div>
     </div>
   );
 }

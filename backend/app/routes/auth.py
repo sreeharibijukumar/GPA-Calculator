@@ -10,8 +10,9 @@ from google.oauth2 import id_token as google_id_token
 from google.auth.transport import requests as google_requests
 
 from sqlalchemy.orm import Session
+from sqlalchemy.exc import IntegrityError
 from app.database import get_db
-from app.models import User, UserResponse, GoogleAuthRequest, TokenResponse
+from app.models import User, UserResponse, UserProfileUpdate, GoogleAuthRequest, TokenResponse
 
 router = APIRouter(prefix="/auth", tags=["Authentication"])
 
@@ -126,6 +127,29 @@ def google_auth(body: GoogleAuthRequest, db: Session = Depends(get_db)) -> Token
 
 @router.get("/me", response_model=UserResponse, status_code=200, summary="Get current user profile")
 def get_me(current_user: User = Depends(get_current_user)) -> UserResponse:
+    return UserResponse.model_validate(current_user)
+
+@router.patch("/me", response_model=UserResponse, status_code=200, summary="Update current user profile")
+def update_me(body: UserProfileUpdate, current_user: User = Depends(get_current_user), db: Session = Depends(get_db)) -> UserResponse:
+    if body.full_name is not None:
+        current_user.full_name = body.full_name
+    if body.ht_number is not None:
+        current_user.ht_number = body.ht_number
+    if body.department is not None:
+        current_user.department = body.department
+    if body.regulation is not None:
+        current_user.regulation = body.regulation
+    current_user.updated_at = datetime.now(timezone.utc)
+
+    try:
+        db.flush()
+    except IntegrityError:
+        db.rollback()
+        raise HTTPException(
+            status_code=409,
+            detail="That hall ticket number is already registered to another account.",
+        )
+    db.refresh(current_user)
     return UserResponse.model_validate(current_user)
 
 @router.post("/logout", status_code=204, summary="Logout user (client-side token removal)")

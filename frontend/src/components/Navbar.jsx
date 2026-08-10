@@ -80,7 +80,6 @@ export default function Navbar() {
           <nav style={{ display: "flex", alignItems: "center", gap: "4px" }}>
             {[
               { to: "/dashboard", label: "Dashboard" },
-              { to: "/calculator", label: "Calculator" },
             ].map(({ to, label }) => (
               <Link
                 key={to}

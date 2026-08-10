@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useState } from "react";
-import { BookOpen, Edit2, Plus, Trash2, TrendingUp } from "lucide-react";
-import { semestersApi } from "../utils/api";
+import {
+  BookOpen,
+  Edit2,
+  Plus,
+  Trash2,
+  TrendingUp,
+  Settings2,
+} from "lucide-react";
+import { courseStructureApi, semestersApi } from "../utils/api";
 import { computeCgpa, getPerformanceTag } from "../utils/grading";
 import {
   Badge,
@@ -9,10 +16,13 @@ import {
   Divider,
   EmptyState,
   GpaRing,
+  Select,
   Spinner,
 } from "../components/ui";
 import SemesterForm from "../components/SemesterForm";
 import { useAuth } from "../context/AuthContext";
+import ProfileSetupModal from "../components/ProfileSetupModal";
+import MarksCalculator from "../components/MarksCalculator";
 
 // SemesterCard
 function SemesterCard({ semester, onEdit, onDelete }) {
@@ -197,7 +207,7 @@ function SemesterCard({ semester, onEdit, onDelete }) {
                 <span
                   style={{ fontSize: "14px", color: "var(--text-primary)" }}
                 >
-                  {s.name}
+                  {s.code ? `${s.code} — ${s.name}` : s.name}
                 </span>
                 <span
                   style={{
@@ -234,9 +244,121 @@ function SemesterCard({ semester, onEdit, onDelete }) {
   );
 }
 
+// Small editable Department/Regulation
+function CourseContextBar({ department, regulation, onChange }) {
+  const [editing, setEditing] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [regulations, setRegulations] = useState([]);
+  const [dept, setDept] = useState(department);
+  const [reg, setReg] = useState(regulation);
+
+  useEffect(() => {
+    if (!editing) return;
+    courseStructureApi
+      .getCourses()
+      .then(setCourses)
+      .catch(() => setCourses([]));
+  }, [editing]);
+
+  useEffect(() => {
+    if (!dept) {
+      setRegulations([]);
+      return;
+    }
+    courseStructureApi
+      .getRegulations(dept)
+      .then(setRegulations)
+      .catch(() => setRegulations([]));
+  }, [dept]);
+
+  if (!editing) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "10px",
+          marginBottom: "20px",
+          flexWrap: "wrap",
+        }}
+      >
+        <Badge color="var(--indigo-400)">
+          {department} · {regulation}
+        </Badge>
+        <button
+          onClick={() => {
+            setDept(department);
+            setReg(regulation);
+            setEditing(true);
+          }}
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "6px",
+            background: "transparent",
+            border: "none",
+            color: "var(--text-muted)",
+            fontSize: "12px",
+            cursor: "pointer",
+          }}
+        >
+          <Settings2 size={13} /> Change course/regulation
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <Card
+      style={{
+        marginBottom: "20px",
+        display: "flex",
+        gap: "12px",
+        alignItems: "flex-end",
+        flexWrap: "wrap",
+      }}
+    >
+      <Select
+        label="Department"
+        value={dept}
+        onChange={(e) => {
+          setDept(e.target.value);
+          setReg("");
+        }}
+        options={courses.map((c) => ({
+          value: c.code,
+          label: `${c.code} — ${c.name}`,
+        }))}
+        containerStyle={{ minWidth: 200 }}
+      />
+      <Select
+        label="Regulation"
+        value={reg}
+        onChange={(e) => setReg(e.target.value)}
+        options={regulations.map((r) => ({ value: r.code, label: r.code }))}
+        containerStyle={{ minWidth: 120 }}
+      />
+      <Button
+        variant="primary"
+        size="sm"
+        onClick={() => {
+          onChange(dept, reg);
+          setEditing(false);
+        }}
+        disabled={!dept || !reg}
+      >
+        Save
+      </Button>
+      <Button variant="ghost" size="sm" onClick={() => setEditing(false)}>
+        Cancel
+      </Button>
+    </Card>
+  );
+}
+
 // Dashboard page
 export default function Dashboard() {
-  const { user } = useAuth();
+  const { user, needsProfileSetup } = useAuth();
   const [semesters, setSemesters] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -245,6 +367,13 @@ export default function Dashboard() {
   const [isSaving, setIsSaving] = useState(false);
   const [saveError, setSaveError] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
+
+  const [ctxDepartment, setCtxDepartment] = useState(user?.department ?? null);
+  const [ctxRegulation, setCtxRegulation] = useState(user?.regulation ?? null);
+  useEffect(() => {
+    setCtxDepartment(user?.department ?? null);
+    setCtxRegulation(user?.regulation ?? null);
+  }, [user?.department, user?.regulation]);
 
   const fetchSemesters = useCallback(async () => {
     try {
@@ -319,10 +448,16 @@ export default function Dashboard() {
     }
   };
 
+  const visibleSemesters = editingSemester
+    ? semesters.filter((s) => s.id !== editingSemester.id)
+    : semesters;
+
   return (
     <main
       style={{ maxWidth: "900px", margin: "0 auto", padding: "40px 24px 80px" }}
     >
+      <ProfileSetupModal open={needsProfileSetup} />
+
       {/* Welcome header + CGPA card */}
       <div
         style={{
@@ -331,7 +466,7 @@ export default function Dashboard() {
           justifyContent: "space-between",
           gap: "24px",
           flexWrap: "wrap",
-          marginBottom: "36px",
+          marginBottom: "20px",
         }}
       >
         <div>
@@ -343,7 +478,7 @@ export default function Dashboard() {
               marginBottom: "6px",
             }}
           >
-            Welcome Back..!
+            Welcome back
             {user?.full_name ? `, ${user.full_name.split(" ")[0]}` : ""}.
           </h1>
           <p style={{ color: "var(--text-muted)", fontSize: "14px" }}>
@@ -405,6 +540,25 @@ export default function Dashboard() {
         )}
       </div>
 
+      {/* course context bar */}
+      {!needsProfileSetup && ctxDepartment && ctxRegulation && (
+        <CourseContextBar
+          department={ctxDepartment}
+          regulation={ctxRegulation}
+          onChange={(d, r) => {
+            setCtxDepartment(d);
+            setCtxRegulation(r);
+          }}
+        />
+      )}
+
+      {/* Marks Scored Calculator */}
+      {!needsProfileSetup && (
+        <div style={{ marginBottom: "32px" }}>
+          <MarksCalculator />
+        </div>
+      )}
+
       {/* Semesters section header */}
       <div
         style={{
@@ -448,7 +602,10 @@ export default function Dashboard() {
             }}
             isSaving={isSaving}
             saveError={saveError}
-          />
+            authenticated
+            department={ctxDepartment}
+            regulation={ctxRegulation}
+          />{" "}
         </div>
       )}
 
@@ -465,7 +622,10 @@ export default function Dashboard() {
             }}
             isSaving={isSaving}
             saveError={saveError}
-          />
+            authenticated
+            department={ctxDepartment}
+            regulation={ctxRegulation}
+          />{" "}
         </div>
       )}
 
@@ -486,7 +646,7 @@ export default function Dashboard() {
         >
           {error}
         </Card>
-      ) : semesters.length === 0 && !showAddForm ? (
+      ) : visibleSemesters.length === 0 && !showAddForm ? (
         <EmptyState
           icon={BookOpen}
           title="No semesters yet"
@@ -500,9 +660,8 @@ export default function Dashboard() {
         />
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-          {semesters.map((semester) => (
+          {visibleSemesters.map((semester) => (
             <div key={semester.id} style={{ position: "relative" }}>
-              {/* Delete loading overlay */}
               {deletingId === semester.id && (
                 <div
                   style={{

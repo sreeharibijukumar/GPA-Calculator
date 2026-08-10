@@ -22,7 +22,6 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
-            <Route path="/calculator" element={<LandingPage />} />
             <Route path="*" element={<LandingPage />} />
           </Routes>
         </div>

@@ -1,5 +1,11 @@
 import { Trash2 } from "lucide-react";
-import { GRADE_COLORS, GRADE_LABELS, VALID_GRADES } from "../utils/grading";
+import {
+  GRADE_COLORS,
+  GRADE_LABELS,
+  gradeForMarks,
+  VALID_GRADES,
+} from "../utils/grading";
+import SubjectAutocomplete from "./SubjectAutocomplete";
 
 export default function SubjectRow({
   subject,
@@ -7,6 +13,8 @@ export default function SubjectRow({
   onChange,
   onDelete,
   error = {},
+  authenticated = false,
+  courseSubjects = [],
 }) {
   const gradeColor = GRADE_COLORS[subject.grade] ?? "var(--text-secondary)";
   const inputBase = {
@@ -20,12 +28,40 @@ export default function SubjectRow({
     width: "100%",
   };
 
+  const colLabel = {
+    fontSize: "11px",
+    fontWeight: 500,
+    color: "var(--text-muted)",
+    letterSpacing: "0.06em",
+    textTransform: "uppercase",
+  };
+
+  const handleMarkChange = (rawValue) => {
+    const patch = { ...subject, mark: rawValue };
+    const parsed = parseFloat(rawValue);
+    if (rawValue !== "" && !isNaN(parsed)) patch.grade = gradeForMarks(parsed);
+    onChange(patch);
+  };
+
+  const handleSubjectSelect = (matched) => {
+    onChange({
+      ...subject,
+      code: matched.code,
+      name: matched.name,
+      credits: matched.credits,
+    });
+  };
+
+  const gridColumns = authenticated
+    ? "1fr 90px 90px 140px 36px"
+    : "1fr 100px 140px 36px";
+
   return (
     <div
       className="animate-fade-in"
       style={{
         display: "grid",
-        gridTemplateColumns: "1fr 100px 140px 36px",
+        gridTemplateColumns: gridColumns,
         gap: "10px",
         alignItems: "start",
         padding: "10px 0",
@@ -34,40 +70,59 @@ export default function SubjectRow({
     >
       {/* Column: Subject Name */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        {index === 0 && (
-          <span
+        {index === 0 && <span style={colLabel}>Subject Name</span>}
+        {authenticated ? (
+          <>
+            <SubjectAutocomplete
+              value={subject.name}
+              onInputChange={(val) =>
+                onChange({ ...subject, name: val, code: "" })
+              }
+              onSelect={handleSubjectSelect}
+              subjects={courseSubjects}
+              placeholder={`Subject ${index + 1}`}
+              error={error.name}
+            />
+            {subject.code && (
+              <span
+                style={{
+                  fontSize: "11px",
+                  color: "var(--indigo-400)",
+                  fontFamily: "var(--font-mono)",
+                }}
+              >
+                {subject.code} · matched
+              </span>
+            )}
+            {!subject.code && subject.name && (
+              <span style={{ fontSize: "11px", color: "var(--text-muted)" }}>
+                Not found in course structure — entering manually
+              </span>
+            )}
+          </>
+        ) : (
+          <input
+            type="text"
+            placeholder={`Subject ${index + 1}`}
+            value={subject.name}
+            onChange={(e) => onChange({ ...subject, name: e.target.value })}
+            maxLength={75}
             style={{
-              fontSize: "11px",
-              fontWeight: 500,
-              color: "var(--text-muted)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
+              ...inputBase,
+              border: `1px solid ${error.name ? "var(--red-500)" : "var(--border)"}`,
             }}
-          >
-            Subject Name
-          </span>
+            onFocus={(e) => {
+              e.target.style.borderColor = "var(--border-focus)";
+              e.target.style.boxShadow = "var(--shadow-indigo)";
+            }}
+            onBlur={(e) => {
+              e.target.style.borderColor = error.name
+                ? "var(--red-500)"
+                : "var(--border)";
+              e.target.style.boxShadow = "none";
+            }}
+          />
         )}
-        <input
-          type="text"
-          placeholder={`Subject ${index + 1}`}
-          value={subject.name}
-          onChange={(e) => onChange({ ...subject, name: e.target.value })}
-          maxLength={75}
-          style={{
-            ...inputBase,
-            border: `1px solid ${error.name ? "var(--red-500)" : "var(--border)"}`,
-          }}
-          onFocus={(e) => {
-            e.target.style.borderColor = "var(--border-focus)";
-            e.target.style.boxShadow = "var(--shadow-indigo)";
-          }}
-          onBlur={(e) => {
-            e.target.style.borderColor = error.name
-              ? "var(--red-500)"
-              : "var(--border)";
-            e.target.style.boxShadow = "none";
-          }}
-        />
         {error.name && (
           <span style={{ fontSize: "11px", color: "var(--red-500)" }}>
             {error.name}
@@ -75,21 +130,30 @@ export default function SubjectRow({
         )}
       </div>
 
+      {/* Column: Marks (authenticated only) */}
+      {authenticated && (
+        <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
+          {index === 0 && <span style={colLabel}>Mark</span>}
+          <input
+            type="number"
+            placeholder="—"
+            min="0"
+            max="100"
+            step="1"
+            value={subject.mark ?? ""}
+            onChange={(e) => handleMarkChange(e.target.value)}
+            style={{
+              ...inputBase,
+              fontFamily: "var(--font-mono)",
+              textAlign: "center",
+            }}
+          />
+        </div>
+      )}
+
       {/* Column: Credits */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        {index === 0 && (
-          <span
-            style={{
-              fontSize: "11px",
-              fontWeight: 500,
-              color: "var(--text-muted)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-            }}
-          >
-            Credits
-          </span>
-        )}
+        {index === 0 && <span style={colLabel}>Credits</span>}
         <input
           type="number"
           placeholder="0.0"
@@ -124,19 +188,7 @@ export default function SubjectRow({
 
       {/* Column: Grade */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
-        {index === 0 && (
-          <span
-            style={{
-              fontSize: "11px",
-              fontWeight: 500,
-              color: "var(--text-muted)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-            }}
-          >
-            Grade
-          </span>
-        )}
+        {index === 0 && <span style={colLabel}>Grade</span>}
         <select
           value={subject.grade}
           onChange={(e) => onChange({ ...subject, grade: e.target.value })}
@@ -177,7 +229,7 @@ export default function SubjectRow({
               userSelect: "none",
             }}
           >
-            🗑
+            ·
           </span>
         )}
         <button

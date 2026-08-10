@@ -10,5 +10,6 @@ backend/app/__pycache__/
 backend/app/routes/__pycache__/
 backend/.env
 
+docs/
 *.md
 !README.md

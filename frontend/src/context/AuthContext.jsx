@@ -4,8 +4,8 @@ import { authApi, clearToken, setToken } from '../utils/api'
 const AuthContext = createContext(null)
 
 export function useAuth() {
-  const ctx = useContext(AuthContext)
-  if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>')
+    const ctx = useContext(AuthContext)
+    if (!ctx) throw new Error('useAuth must be used inside <AuthProvider>')
     return ctx
 }
 
@@ -27,6 +27,12 @@ export function AuthProvider({ children }) {
             setAuthError(msg)
             console.error('[AuthContext] login error:', err)
         }
+    }, [])
+
+    const updateProfile = useCallback(async (payload) => {
+        const updated = await authApi.updateProfile(payload)
+        setUser(updated)
+        return updated
     }, [])
 
     const logout = useCallback(async () => {
@@ -81,7 +87,7 @@ export function AuthProvider({ children }) {
             setIsLoading(false)
             return
         }
-        script.addEventListener('load', setup, { once: true})
+        script.addEventListener('load', setup, { once: true })
         return () => {
             cancelled = true
             script.removeEventListener('load', setup)
@@ -108,7 +114,8 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={{
-            user, isAuthenticated: !!user, isLoading, authError, login, logout, renderSignInButton,
+            user, isAuthenticated: !!user, isLoading, authError, login, logout, renderSignInButton, updateProfile,
+            needsProfileSetup: !!user && (!user.ht_number || !user.department || !user.regulation),
         }}>
             {children}
         </AuthContext.Provider>

@@ -1,8 +1,9 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Plus, Save, X } from "lucide-react";
 import SubjectRow from "./SubjectRow";
 import { Badge, Button, Card, GpaRing } from "./ui";
 import { blankSubject, computeSgpa, getPerformanceTag } from "../utils/grading";
+import { courseStructureApi } from "../utils/api";
 
 export default function SemesterForm({
   initialData = null,
@@ -12,6 +13,9 @@ export default function SemesterForm({
   isSaving = false,
   saveError = null,
   showSave = true,
+  authenticated = false,
+  department = null,
+  regulation = null,
 }) {
   const [subjects, setSubjects] = useState(
     () =>
@@ -22,6 +26,26 @@ export default function SemesterForm({
   );
   const [label, setLabel] = useState(initialData?.semester_label ?? "");
   const [errors, setErrors] = useState({});
+  const [courseSubjects, setCourseSubjects] = useState([]);
+
+  useEffect(() => {
+    if (!authenticated || !department || !regulation) {
+      setCourseSubjects([]);
+      return;
+    }
+    let cancelled = false;
+    courseStructureApi
+      .getSubjects(department, regulation, semesterNumber)
+      .then((data) => {
+        if (!cancelled) setCourseSubjects(data);
+      })
+      .catch(() => {
+        if (!cancelled) setCourseSubjects([]);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [authenticated, department, regulation, semesterNumber]);
 
   // Live SGPA — recomputed on every render
   const sgpa = computeSgpa(
@@ -70,9 +94,14 @@ export default function SemesterForm({
     onSave?.({
       semester_number: semesterNumber,
       semester_label: label || null,
-      subjects: subjects.map(({ _id, ...rest }) => ({
+      subjects: subjects.map(({ _id, code, mark, ...rest }) => ({
         ...rest,
         credits: parseFloat(rest.credits),
+        code: code || undefined,
+        mark:
+          mark === "" || mark === undefined || mark === null
+            ? undefined
+            : parseFloat(mark),
       })),
     });
   };
@@ -142,8 +171,7 @@ export default function SemesterForm({
                 marginTop: "2px",
               }}
             >
-              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·{" "}
-              {totalCredits.toFixed(1)} effective credits
+              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·{totalCredits.toFixed(1)} effective credits
             </div>
           </div>
         </div>
@@ -169,7 +197,6 @@ export default function SemesterForm({
         )}
       </div>
 
-      {/* Subject rows */}
       <div style={{ padding: "0 24px" }}>
         {subjects.map((subject, i) => (
           <SubjectRow
@@ -179,11 +206,12 @@ export default function SemesterForm({
             onChange={(updated) => updateSubject(i, updated)}
             onDelete={() => deleteSubject(i)}
             error={errors[i] ?? {}}
+            authenticated={authenticated}
+            courseSubjects={courseSubjects}
           />
         ))}
       </div>
 
-      {/* Footer: Add Subject + live SGPA + Save button */}
       <div
         style={{
           padding: "16px 24px",

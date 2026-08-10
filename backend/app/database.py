@@ -69,6 +69,10 @@ def init_db() -> None:
     from app import models
     Base.metadata.create_all(bind=engine)
 
+    from app.seed_data import seed_course_structure
+    with get_db_context() as db:
+        seed_course_structure(db)
+
 def check_db_health() -> bool:
     try:
         with engine.connect() as conn:

@@ -40,6 +40,20 @@ export const authApi = {
     api.post('/auth/google', { credential }).then((r) => r.data),
   getMe: () => api.get('/auth/me').then((r) => r.data),
   logout: () => api.post('/auth/logout').catch(() => {}),
+  updateProfile: (payload) => api.patch('/auth/me', payload).then((r) => r.data),
+}
+
+export const courseStructureApi = {
+  getCourses: () => api.get('/course-structure/courses').then((r) => r.data),
+
+  getRegulations: (course) =>
+    api.get(`/course-structure/${course}/regulations`).then((r) => r.data),
+
+  getSemesters: (course, regulation) =>
+    api.get(`/course-structure/${course}/${regulation}/semesters`).then((r) => r.data),
+
+  getSubjects: (course, regulation, semester) =>
+    api.get(`/course-structure/${course}/${regulation}/${semester}/subjects`).then((r) => r.data),
 }
 
 // ── Semesters API 

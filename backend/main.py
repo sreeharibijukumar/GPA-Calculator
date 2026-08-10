@@ -9,6 +9,7 @@ from fastapi.responses import JSONResponse
 from app.database import check_db_health, init_db
 from app.routes.auth import router as auth_router
 from app.routes.semesters import router as semesters_router
+from app.routes.course_structure import router as course_structure_router
 
 FRONTEND_URL: str = os.environ.get("FRONTEND_URL", "http://localhost:5173")
 CORS_ORIGINS: list[str] = [FRONTEND_URL]
@@ -41,6 +42,7 @@ def create_app() -> FastAPI:
 
     app.include_router(auth_router, prefix="/api/v1")
     app.include_router(semesters_router, prefix="/api/v1")
+    app.include_router(course_structure_router, prefix="/api/v1")
 
     @app.get("/health", tags=["Infrastructure"], include_in_schema=False)
     def health() -> JSONResponse:
