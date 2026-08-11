@@ -8,7 +8,7 @@ import {
   Settings2,
 } from "lucide-react";
 import { courseStructureApi, semestersApi } from "../utils/api";
-import { computeCgpa, getPerformanceTag } from "../utils/grading";
+import { computeCgpa, computeOverallMarks, computeSemesterMarks, getPerformanceTag } from "../utils/grading";
 import {
   Badge,
   Button,
@@ -22,12 +22,13 @@ import {
 import SemesterForm from "../components/SemesterForm";
 import { useAuth } from "../context/AuthContext";
 import ProfileSetupModal from "../components/ProfileSetupModal";
-import MarksCalculator from "../components/MarksCalculator";
 
 // SemesterCard
 function SemesterCard({ semester, onEdit, onDelete }) {
   const [expanded, setExpanded] = useState(false);
   const perf = getPerformanceTag(semester.sgpa);
+
+  const marks = computeSemesterMarks(semester.subjects ?? []);
 
   // Shared icon button styles
   const iconBtn = {
@@ -92,7 +93,7 @@ function SemesterCard({ semester, onEdit, onDelete }) {
         >
           {semester.semester_number}
         </div>
-        {/* Label + subject count */}
+        {/* Label + subject count + marks summary */}
         <div style={{ flex: 1, minWidth: 0 }}>
           <p
             style={{
@@ -114,6 +115,17 @@ function SemesterCard({ semester, onEdit, onDelete }) {
             {semester.subjects.length} subjects · click to{" "}
             {expanded ? "collapse" : "expand"}
           </p>
+          {marks.scored > 0 && (
+            <p
+              style={{
+                fontSize: "12px",
+                color: "var(--text-secondary)",
+                marginTop: "2px",
+              }}
+            >
+              Marks: {marks.scored} / {marks.max} · {marks.percentage.toFixed(2)}%
+            </p>
+          )}
         </div>
         {/* SGPA + performance badge */}
         <div
@@ -174,7 +186,7 @@ function SemesterCard({ semester, onEdit, onDelete }) {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "1fr 80px 80px",
+                gridTemplateColumns: "1fr 70px 80px 80px",
                 gap: "8px",
                 fontSize: "11px",
                 fontWeight: 500,
@@ -186,6 +198,7 @@ function SemesterCard({ semester, onEdit, onDelete }) {
               }}
             >
               <span>Subject</span>
+              <span style={{ textAlign: "center" }}>Mark</span>
               <span style={{ textAlign: "center" }}>Credits</span>
               <span style={{ textAlign: "center" }}>Grade</span>
             </div>
@@ -194,7 +207,7 @@ function SemesterCard({ semester, onEdit, onDelete }) {
                 key={i}
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "1fr 80px 80px",
+                  gridTemplateColumns: "1fr 70px 80px 80px",
                   gap: "8px",
                   padding: "8px 0",
                   alignItems: "center",
@@ -208,6 +221,16 @@ function SemesterCard({ semester, onEdit, onDelete }) {
                   style={{ fontSize: "14px", color: "var(--text-primary)" }}
                 >
                   {s.code ? `${s.code} — ${s.name}` : s.name}
+                </span>
+                <span
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: "13px",
+                    color: "var(--text-secondary)",
+                  }}
+                >
+                  {s.mark ?? "—"}
                 </span>
                 <span
                   style={{
@@ -237,10 +260,61 @@ function SemesterCard({ semester, onEdit, onDelete }) {
                 </span>
               </div>
             ))}
+
+            {marks.scored > 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  gap: "24px",
+                  flexWrap: "wrap",
+                  marginTop: "14px",
+                  paddingTop: "12px",
+                  borderTop: "1px solid var(--border-subtle)",
+                }}
+              >
+                <SmallStat label="Marks Scored" value={marks.scored} />
+                <SmallStat label="Total Marks" value={marks.max} />
+                <SmallStat
+                  label="Percentage"
+                  value={`${marks.percentage.toFixed(2)}%`}
+                  highlight
+                />
+              </div>
+            )}
           </div>
         </>
       )}
     </Card>
+  );
+}
+
+// Tiny stat block reused by SemesterCard's expanded footer.
+// Same visual language as SemesterForm's MarksStat, kept local here
+// Since SemesterCard is itself a page-local component.
+function SmallStat({ label, value, highlight = false }) {
+  return (
+    <div>
+      <div
+        style={{
+          fontSize: "11px",
+          color: "var(--text-muted)",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "16px",
+          fontWeight: 700,
+          color: highlight ? "var(--emerald-400)" : "var(--text-primary)",
+        }}
+      >
+        {value}
+      </div>
+    </div>
   );
 }
 
@@ -393,6 +467,7 @@ export default function Dashboard() {
 
   const cgpa = computeCgpa(semesters.map((s) => s.sgpa));
   const cgpaPerf = getPerformanceTag(cgpa);
+  const overallMarks = computeOverallMarks(semesters);
   const nextSemNumber =
     semesters.length > 0
       ? Math.max(...semesters.map((s) => s.semester_number)) + 1
@@ -458,7 +533,7 @@ export default function Dashboard() {
     >
       <ProfileSetupModal open={needsProfileSetup} />
 
-      {/* Welcome header + CGPA card */}
+      {/* Welcome header + Top summary card */}
       <div
         style={{
           display: "flex",
@@ -493,49 +568,41 @@ export default function Dashboard() {
               padding: "20px 28px",
               display: "flex",
               alignItems: "center",
-              gap: "20px",
+              gap: "28px",
+              flexWrap: "wrap",
             }}
           >
-            <GpaRing
-              value={cgpa}
-              size={90}
-              label="CGPA"
-              color="var(--emerald-500)"
-            />
-            <div>
-              <p
-                style={{
-                  fontSize: "11px",
-                  color: "var(--text-muted)",
-                  textTransform: "uppercase",
-                  letterSpacing: "0.06em",
-                  marginBottom: "4px",
-                }}
-              >
-                Cumulative GPA
-              </p>
-              <div
-                style={{ display: "flex", alignItems: "baseline", gap: "8px" }}
-              >
-                <span
-                  style={{
-                    fontFamily: "var(--font-mono)",
-                    fontSize: "32px",
-                    fontWeight: 800,
-                    color: "var(--emerald-400)",
-                    lineHeight: 1,
-                  }}
-                >
-                  {cgpa.toFixed(2)}
-                </span>
-                <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>
-                  / 10
-                </span>
-              </div>
-              <Badge color={cgpaPerf.color} style={{ marginTop: "6px" }}>
+            <div style={{ textAlign: "center" }}>
+              <GpaRing
+                value={cgpa}
+                size={90}
+                label="CGPA"
+                color="var(--emerald-500)"
+              />
+              <Badge color={cgpaPerf.color} style={{ marginTop: "8px" }}>
                 {cgpaPerf.label}
               </Badge>
             </div>
+            {overallMarks.max > 0 && (
+              <div style={{ textAlign: "center" }}>
+                <GpaRing
+                  value={overallMarks.percentage}
+                  max={100}
+                  size={90}
+                  label="Overall %"
+                  color="var(--indigo-500)"
+                />
+                <p
+                  style={{
+                    fontSize: "12px",
+                    color: "var(--text-muted)",
+                    marginTop: "8px",
+                  }}
+                >
+                  {overallMarks.scored} / {overallMarks.max} marks
+                </p>
+              </div>
+            )}
           </Card>
         )}
       </div>
@@ -550,13 +617,6 @@ export default function Dashboard() {
             setCtxRegulation(r);
           }}
         />
-      )}
-
-      {/* Marks Scored Calculator */}
-      {!needsProfileSetup && (
-        <div style={{ marginBottom: "32px" }}>
-          <MarksCalculator />
-        </div>
       )}
 
       {/* Semesters section header */}

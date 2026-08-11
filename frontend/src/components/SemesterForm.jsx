@@ -2,7 +2,12 @@ import { useCallback, useEffect, useState } from "react";
 import { Plus, Save, X } from "lucide-react";
 import SubjectRow from "./SubjectRow";
 import { Badge, Button, Card, GpaRing } from "./ui";
-import { blankSubject, computeSgpa, getPerformanceTag } from "../utils/grading";
+import {
+  blankSubject,
+  computeSemesterMarks,
+  computeSgpa,
+  getPerformanceTag,
+} from "../utils/grading";
 import { courseStructureApi } from "../utils/api";
 
 export default function SemesterForm({
@@ -58,6 +63,8 @@ export default function SemesterForm({
   const totalCredits = subjects
     .filter((s) => s.grade !== "Complete")
     .reduce((acc, s) => acc + (parseFloat(s.credits) || 0), 0);
+
+  const marks = authenticated ? computeSemesterMarks(subjects) : null;
 
   const updateSubject = useCallback((index, updated) => {
     setSubjects((prev) => prev.map((s, i) => (i === index ? updated : s)));
@@ -116,6 +123,7 @@ export default function SemesterForm({
           alignItems: "center",
           justifyContent: "space-between",
           gap: "16px",
+          flexWrap: "wrap",
         }}
       >
         <div
@@ -171,16 +179,41 @@ export default function SemesterForm({
                 marginTop: "2px",
               }}
             >
-              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·{totalCredits.toFixed(1)} effective credits
+              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·
+              {totalCredits.toFixed(1)} effective credits
             </div>
           </div>
         </div>
-        <GpaRing
-          value={sgpa}
-          size={80}
-          label="SGPA"
-          color={sgpa >= 7 ? "var(--emerald-500)" : "var(--indigo-500)"}
-        />
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "14px",
+            flexShrink: 0,
+          }}
+        >
+          <GpaRing
+            value={sgpa}
+            size={80}
+            label="SGPA"
+            color={sgpa >= 7 ? "var(--emerald-500)" : "var(--indigo-500)"}
+          />
+          {authenticated && marks.max > 0 && (
+            <GpaRing
+              value={marks.percentage}
+              max={100}
+              size={80}
+              label="Marks %"
+              color={
+                marks.percentage >= 60
+                  ? "var(--emerald-500)"
+                  : "var(--amber-400)"
+              }
+            />
+          )}
+        </div>
+
         {onCancel && (
           <button
             onClick={onCancel}
@@ -211,6 +244,26 @@ export default function SemesterForm({
           />
         ))}
       </div>
+
+      {authenticated && marks.max > 0 && (
+        <div
+          style={{
+            padding: "14px 24px",
+            borderTop: "1px solid var(--border)",
+            display: "flex",
+            gap: "24px",
+            flexWrap: "wrap",
+          }}
+        >
+          <MarksStat label="Marks Scored" value={marks.scored} />
+          <MarksStat label="Total Marks" value={marks.max} />
+          <MarksStat
+            label="Percentage"
+            value={`${marks.percentage.toFixed(2)}%`}
+            highlight
+          />
+        </div>
+      )}
 
       <div
         style={{
@@ -275,5 +328,32 @@ export default function SemesterForm({
         </div>
       </div>
     </Card>
+  );
+}
+
+function MarksStat({ label, value, highlight = false }) {
+  return (
+    <div>
+      <div
+        style={{
+          fontSize: "11px",
+          color: "var(--text-muted)",
+          textTransform: "uppercase",
+          letterSpacing: "0.05em",
+        }}
+      >
+        {label}
+      </div>
+      <div
+        style={{
+          fontFamily: "var(--font-mono)",
+          fontSize: "18px",
+          fontWeight: 700,
+          color: highlight ? "var(--emerald-400)" : "var(--text-primary)",
+        }}
+      >
+        {value}
+      </div>
+    </div>
   );
 }

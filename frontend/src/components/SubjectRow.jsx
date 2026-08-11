@@ -134,20 +134,22 @@ export default function SubjectRow({
       {authenticated && (
         <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
           {index === 0 && <span style={colLabel}>Mark</span>}
-          <input
-            type="number"
-            placeholder="—"
-            min="0"
-            max="100"
-            step="1"
-            value={subject.mark ?? ""}
-            onChange={(e) => handleMarkChange(e.target.value)}
-            style={{
-              ...inputBase,
-              fontFamily: "var(--font-mono)",
-              textAlign: "center",
-            }}
-          />
+          <div style={{ position: "relative" }}>
+            <input
+              type="number"
+              placeholder="—"
+              min="0"
+              max="100"
+              step="1"
+              value={subject.mark ?? ""}
+              onChange={(e) => handleMarkChange(e.target.value)}
+              style={{
+                ...inputBase,
+                fontFamily: "var(--font-mono)",
+                textAlign: "center",
+              }}
+            />
+          </div>
         </div>
       )}
 

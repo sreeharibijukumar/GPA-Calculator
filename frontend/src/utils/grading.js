@@ -111,32 +111,39 @@ export function blankSubject(id) {
 }
 
 /**
- * @param {Array<{scored: number|string, max: number|string}>} rows
+ * @param {Array<{mark?: number|string}>} subjects
  * @returns {{ scored: number, max: number, percentage: number }}
  */
-export function computeMarksTotals(rows) {
+export function computeSemesterMarks(subjects = []) {
   let scored = 0
-  let max = 0
-  for (const row of rows) {
-    const s = parseFloat(row.scored)
-    const m = parseFloat(row.max)
-    if (!isNaN(s)) scored += s
-    if (!isNaN(m)) max += m
+  for (const subject of subjects) {
+    const m = parseFloat(subject.mark)
+    if (!isNaN(m)) scored += m
   }
+  const max = subjects.length * 100
   const percentage = max > 0 ? Math.round((scored / max) * 10000) / 100 : 0
-  return { scored: Math.round(scored * 100) / 100, max: Math.round(max * 100) / 100, percentage }
+  return { scored: Math.round(scored * 100) / 100, max, percentage }
 }
 
-/** Validate one marks-row: scored can't be negative, exceed max, or exceed 100 per subject. */
-export function validateMarksRow(row) {
-  const errors = {}
-  const s = parseFloat(row.scored)
-  const m = parseFloat(row.max)
-  if (row.max !== '' && (isNaN(m) || m <= 0)) errors.max = 'Must be > 0'
-  if (!isNaN(m) && m > 100) errors.max = 'Max 100 per subject'
-  if (row.scored !== '' && (isNaN(s) || s < 0)) errors.scored = 'Cannot be negative'
-  if (!isNaN(s) && !isNaN(m) && s > m) errors.scored = 'Cannot exceed max'
-  return errors
+/** Validate one marks-row: scored can't be negative, exceed max, or exceed 100 per subject. 
+ * 
+ * @param {Array<{subjects: Array<{mark?: number|string}>}>} semesters
+ * @returns {{ scored: number, max: number, percentage: number }}
+ */
+export function computeOverallMarks(semesters = []) {
+  let scored = 0
+  let max = 0
+  for (const semester of semesters) {
+    const totals = computeSemesterMarks(semester.subjects ?? [])
+    scored += totals.scored
+    max += totals.max
+  }
+  const percentage = max > 0 ? Math.round((scored / max ) * 10000) / 100 : 0
+  return {
+    scored: Math.round(scored * 100) / 100,
+    max,
+    percentage,
+  }
 }
 
 export function subjectMatches(subject, query) {
