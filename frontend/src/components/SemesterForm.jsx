@@ -9,6 +9,7 @@ import {
   getPerformanceTag,
 } from "../utils/grading";
 import { courseStructureApi } from "../utils/api";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function SemesterForm({
   initialData = null,
@@ -22,6 +23,7 @@ export default function SemesterForm({
   department = null,
   regulation = null,
 }) {
+  const isMobile = useIsMobile();
   const [subjects, setSubjects] = useState(
     () =>
       initialData?.subjects?.map((s) => ({
@@ -113,28 +115,12 @@ export default function SemesterForm({
     });
   };
 
+  const ringSize = isMobile ? 64 : 80;
+
   return (
     <Card style={{ padding: "0", overflow: "hidden" }}>
-      <div
-        style={{
-          padding: "20px 24px",
-          borderBottom: "1px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "16px",
-          flexWrap: "wrap",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            flex: 1,
-            minWidth: 0,
-          }}
-        >
+      <div className="semester-header">
+        <div className="semester-header-info">
           <div
             style={{
               width: 36,
@@ -179,23 +165,16 @@ export default function SemesterForm({
                 marginTop: "2px",
               }}
             >
-              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·
+              {subjects.length} subject{subjects.length !== 1 ? "s" : ""} ·{" "}
               {totalCredits.toFixed(1)} effective credits
             </div>
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "14px",
-            flexShrink: 0,
-          }}
-        >
+        <div className="semester-header-metrics">
           <GpaRing
             value={sgpa}
-            size={80}
+            size={ringSize}
             label="SGPA"
             color={sgpa >= 7 ? "var(--emerald-500)" : "var(--indigo-500)"}
           />
@@ -203,7 +182,7 @@ export default function SemesterForm({
             <GpaRing
               value={marks.percentage}
               max={100}
-              size={80}
+              size={ringSize}
               label="Marks %"
               color={
                 marks.percentage >= 60
@@ -217,13 +196,8 @@ export default function SemesterForm({
         {onCancel && (
           <button
             onClick={onCancel}
-            style={{
-              background: "transparent",
-              border: "none",
-              cursor: "pointer",
-              color: "var(--text-muted)",
-              padding: "4px",
-            }}
+            className="semester-header-close"
+            aria-label="Close semester"
           >
             <X size={18} />
           </button>
@@ -265,33 +239,16 @@ export default function SemesterForm({
         </div>
       )}
 
-      <div
-        style={{
-          padding: "16px 24px",
-          borderTop: "1px solid var(--border)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "12px",
-          flexWrap: "wrap",
-        }}
-      >
+      <div className="semester-footer">
         <Button
           variant="ghost"
-          size="sm"
+          size={isMobile ? "md" : "sm"}
           onClick={addSubject}
           style={{ color: "var(--indigo-400)" }}
         >
           <Plus size={15} /> Add Subject
         </Button>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            gap: "12px",
-            flexWrap: "wrap",
-          }}
-        >
+        <div className="semester-footer-right">
           {sgpa > 0 && (
             <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
               <span style={{ fontSize: "13px", color: "var(--text-muted)" }}>
@@ -318,7 +275,8 @@ export default function SemesterForm({
           {showSave && onSave && (
             <Button
               variant="primary"
-              size="sm"
+              size={isMobile ? "lg" : "sm"}
+              fullWidth={isMobile}
               onClick={handleSave}
               loading={isSaving}
             >

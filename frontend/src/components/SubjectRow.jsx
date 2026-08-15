@@ -6,6 +6,8 @@ import {
   VALID_GRADES,
 } from "../utils/grading";
 import SubjectAutocomplete from "./SubjectAutocomplete";
+import { useState } from "react";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 export default function SubjectRow({
   subject,
@@ -16,12 +18,14 @@ export default function SubjectRow({
   authenticated = false,
   courseSubjects = [],
 }) {
+  const isMobile = useIsMobile();
+  const [autocompleteOpen, setAutocompleteOpen] = useState(false);
   const gradeColor = GRADE_COLORS[subject.grade] ?? "var(--text-secondary)";
+
   const inputBase = {
     background: "var(--bg-input)",
     borderRadius: "var(--radius-md)",
     padding: "8px 10px",
-    fontSize: "14px",
     color: "var(--text-primary)",
     fontFamily: "var(--font-sans)",
     outline: "none",
@@ -52,6 +56,173 @@ export default function SubjectRow({
     });
   };
 
+  const gradeSelect = (extraStyle = {}) => (
+    <select
+      value={subject.grade}
+      onChange={(e) => onChange({ ...subject, grade: e.target.value })}
+      className="field-select"
+      style={{ color: gradeColor, ...extraStyle }}
+    >
+      {VALID_GRADES.map((g) => (
+        <option key={g} value={g}>
+          {GRADE_LABELS[g]}
+        </option>
+      ))}
+    </select>
+  );
+
+  const autocompleteHint = subject.code ? (
+    <span className="subject-card-hint subject-card-hint--matched">
+      {subject.code} · matched
+    </span>
+  ) : subject.name ? (
+    <span className="subject-card-hint">
+      Not found in course structure — entering manually
+    </span>
+  ) : null;
+
+  // MOBILE: Vertical card
+  if (isMobile) {
+    return (
+      <div className={`subject-card animate-fade-in${ autocompleteOpen ? "subject-card--active" : "" }`}>
+        <div className="subject-card-header">
+          <span className="subject-card-title">Subject {index + 1}</span>
+          <button
+            type="button"
+            onClick={onDelete}
+            className="subject-card-delete"
+            aria-label={`Remove subject ${index + 1}`}
+          >
+            <Trash2 size={16} />
+          </button>
+        </div>
+
+        <div className="subject-card-field">
+          <span className="subject-card-label">Subject Name</span>
+          {authenticated ? (
+            <>
+              <SubjectAutocomplete
+                value={subject.name}
+                onInputChange={(val) => 
+                  onChange({ ...subject, name: val, code: "" })
+                }
+                onSelect={handleSubjectSelect}
+                subjects={courseSubjects}
+                placeholder={`Subject ${index + 1}`}
+                error={error.name}
+                onOpenChange={setAutocompleteOpen}
+              />
+              {autocompleteHint}
+            </>
+          ) : (
+            <input 
+              type="text"
+              placeholder={`Subject ${index + 1}`}
+              value={subject.name}
+              onChange={(e) => onChange({ ...subject, name: e.target.value })}
+              maxLength={75}
+              className="field-input"
+              style={{
+                ...inputBase,
+                border: `1px solid ${error.name ? "var(--red-500)" : "var(--border)"}`,
+              }}
+              onFocus={(e) => {
+                e.target.style.borderColor = "var(--border-focus)";
+                e.target.style.boxShadow = "var(--shadow-indigo)";
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = error.name
+                  ? "var(--red-500)"
+                  : "var(--border)";
+                e.target.style.boxShadow = "none";
+              }}
+            />
+          )}
+          {error.name && <span className="field-error">{error.name}</span>}
+        </div>
+
+        {authenticated ? (
+          <div className="subject-card-row">
+            <div className="subject-card-field">
+              <span className="subject-card-label">Mark</span>
+              <input
+                type="number"
+                inputMode="numeric"
+                placeholder="—"
+                min="0"
+                max="100"
+                step="1"
+                value={subject.mark ?? ""}
+                onChange={(e) => handleMarkChange(e.target.value)}
+                className="field-input"
+                style={{
+                  ...inputBase,
+                  border: "1px solid var(--border)",
+                  fontFamily: "var(--font-mono)",
+                  textAlign: "center",
+                }}
+              />
+            </div>
+            <div className="subject-card-field">
+              <span className="subject-card-label">Credits</span>
+              <input
+                type="number"
+                inputMode="decimal"
+                placeholder="0.0"
+                min="0"
+                max="5"
+                step="0.5"
+                value={subject.credits}
+                onChange={(e) =>
+                  onChange({ ...subject, credits: e.target.value })
+                }
+                className="field-input"
+                style={{
+                  ...inputBase,
+                  border: `1px solid ${error.credits ? "var(--red-500)" : "var(--border)"}`,
+                  fontFamily: "var(--font-mono)",
+                  textAlign: "center",
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <div className="subject-card-field">
+            <span className="subject-card-label">Credits</span>
+            <input
+              type="number"
+              inputMode="decimal"
+              placeholder="0.0"
+              min="0"
+              max="5"
+              step="0.5"
+              value={subject.credits}
+              onChange={(e) =>
+                onChange({ ...subject, credits: e.target.value })
+              }
+              className="field-input"
+              style={{
+                ...inputBase,
+                border: `1px solid ${error.credits ? "var(--red-500)" : "var(--border)"}`,
+                fontFamily: "var(--font-mono)",
+                textAlign: "center",
+              }}
+            />
+          </div>
+        )}
+        {error.credits && (
+          <span className="field-error">{error.credits}</span>
+        )}
+
+        <div className="subject-card-field">
+          <span className="subject-card-label">Grade</span>
+          {gradeSelect()}
+        </div>
+      </div>
+    );
+  }
+
+  // DESKTOP 
   const gridColumns = authenticated
     ? "1fr 90px 90px 140px 36px"
     : "1fr 100px 140px 36px";
@@ -82,6 +253,7 @@ export default function SubjectRow({
               subjects={courseSubjects}
               placeholder={`Subject ${index + 1}`}
               error={error.name}
+              onOpenChange={setAutocompleteOpen}
             />
             {subject.code && (
               <span
@@ -107,6 +279,7 @@ export default function SubjectRow({
             value={subject.name}
             onChange={(e) => onChange({ ...subject, name: e.target.value })}
             maxLength={75}
+            className="field-input"
             style={{
               ...inputBase,
               border: `1px solid ${error.name ? "var(--red-500)" : "var(--border)"}`,
@@ -143,8 +316,10 @@ export default function SubjectRow({
               step="1"
               value={subject.mark ?? ""}
               onChange={(e) => handleMarkChange(e.target.value)}
+              className="field-input"
               style={{
                 ...inputBase,
+                border: "1px solid var(--border)",
                 fontFamily: "var(--font-mono)",
                 textAlign: "center",
               }}
@@ -164,6 +339,7 @@ export default function SubjectRow({
           step="0.5"
           value={subject.credits}
           onChange={(e) => onChange({ ...subject, credits: e.target.value })}
+          className="field-input"
           style={{
             ...inputBase,
             border: `1px solid ${error.credits ? "var(--red-500)" : "var(--border)"}`,
@@ -191,34 +367,7 @@ export default function SubjectRow({
       {/* Column: Grade */}
       <div style={{ display: "flex", flexDirection: "column", gap: "4px" }}>
         {index === 0 && <span style={colLabel}>Grade</span>}
-        <select
-          value={subject.grade}
-          onChange={(e) => onChange({ ...subject, grade: e.target.value })}
-          style={{
-            background: "var(--bg-input)",
-            border: "1px solid var(--border)",
-            borderRadius: "var(--radius-md)",
-            padding: "8px 10px",
-            fontSize: "13px",
-            color: gradeColor,
-            fontFamily: "var(--font-sans)",
-            fontWeight: 600,
-            outline: "none",
-            cursor: "pointer",
-            width: "100%",
-            appearance: "none",
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%234A5C72' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E")`,
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "right 10px center",
-            paddingRight: "28px",
-          }}
-        >
-          {VALID_GRADES.map((g) => (
-            <option key={g} value={g}>
-              {GRADE_LABELS[g]}
-            </option>
-          ))}
-        </select>
+        {gradeSelect()}
       </div>
 
       {/* Column: Delete button */}
@@ -238,6 +387,7 @@ export default function SubjectRow({
           type="button"
           onClick={onDelete}
           title="Remove subject"
+          aria-label={`Remove subject ${index + 1}`}
           style={{
             width: 36,
             height: 36,

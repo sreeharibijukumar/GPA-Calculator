@@ -1,3 +1,25 @@
+/* Purpose: Global styles — CSS custom properties (design tokens), resets, 
+   typography, scrollbar, utility classes, and keyframe animations.
+
+   DESIGN SYSTEM
+   ─────────────
+   Primary background : #0B0F19  (Deep Slate/Charcoal)
+   Card background    : #151F32  (Dark Navy)
+   Primary accent     : #6366F1  (Electric Indigo) — actions, focus, buttons
+   Success accent     : #10B981  (Neon Emerald)    — SGPA/CGPA results, success
+   Error              : #EF4444  (Red-500)
+   Warning            : #FBBF24  (Amber-400)
+
+   Typography:
+   - Inter          — all UI text (labels, buttons, body)
+   - JetBrains Mono — GPA numbers (crisp monospaced digits)
+
+   All colours are defined as CSS custom properties so they can be referenced
+   anywhere — in component inline styles as var(--bg-card) etc. */
+
+
+
+/* ── Design Tokens ────────────────────────────────────────────────────────── */
 :root {
   /* Backgrounds */
   --bg-base:        #0B0F19;
@@ -115,5 +137,280 @@ code, kbd, pre, samp { font-family: var(--font-mono); font-size: 0.875em; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* NEW (Mobile UX overhaul + autocomplete overlap/clipping fix) */
+
+/* ── Shared form-field base ─────────────────────────────────────────────── */
+.field-input {
+  font-size: 14px;
+}
+@media (max-width: 767px) {
+  .field-input {
+    font-size: 16px;
+  }
+}
+
+.field-select {
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 8px 10px;
+  font-size: 13px;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%234A5C72' stroke-width='1.5' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 28px;
+}
+@media (max-width: 767px) {
+  .field-select {
+    font-size: 16px;
+  }
+}
+
+.field-error {
+  font-size: 11px;
+  color: var(--red-500);
+}
+
+/* ── Autocomplete dropdown (portal-rendered) ────────────────────────────── */
+.ac-dropdown {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+  overflow-x: hidden;
+  box-sizing: border-box;
+  z-index: 1000;
+}
+
+.ac-option {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  padding: 10px 12px;
+  min-height: 44px;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+  border-bottom: 1px solid var(--border-subtle);
+  background: transparent;
+}
+.ac-option:last-child {
+  border-bottom: none;
+}
+.ac-option--active {
+  border-left-color: var(--indigo-500);
+  background: var(--bg-card-hover);
+}
+.ac-option-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+.ac-option-code {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--indigo-400);
+  letter-spacing: 0.02em;
+}
+.ac-option-badge {
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  background: var(--bg-input);
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.ac-option-name {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Larger, easier-to-tap suggestions on phones. */
+@media (max-width: 767px) {
+  .ac-option {
+    min-height: 56px;
+    padding: 12px 14px;
+    gap: 4px;
+  }
+  .ac-option-code {
+    font-size: 12px;
+  }
+  .ac-option-name {
+    font-size: 14px;
+  }
+}
+
+/* ── Mobile subject card ────────────────────────────────────────────────── */
+.subject-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  transition: border-color var(--transition);
+}
+.subject-card--active {
+  border-color: var(--indigo-500);
+}
+.subject-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.subject-card-title {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.subject-card-delete {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+.subject-card-delete:hover,
+.subject-card-delete:active {
+  color: var(--red-500);
+  border-color: var(--red-500);
+  background: var(--red-glow);
+}
+.subject-card-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.subject-card-label {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.subject-card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.subject-card-hint {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.subject-card-hint--matched {
+  color: var(--indigo-400);
+  font-family: var(--font-mono);
+}
+.subject-card .field-input,
+.subject-card .field-select {
+  min-height: 46px;
+  padding: 10px 12px;
+}
+
+/* ── Semester header: order-based reflow, no DOM change needed ─────────── */
+.semester-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.semester-header-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  min-width: 0;
+}
+.semester-header-metrics {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+.semester-header-close {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: var(--text-muted);
+  padding: 4px;
+}
+@media (max-width: 767px) {
+  .semester-header {
+    padding: 16px;
+    gap: 10px;
+  }
+  .semester-header-info {
+    order: 1;
+  }
+  .semester-header-close {
+    order: 2;
+  }
+  .semester-header-metrics {
+    order: 3;
+    flex-basis: 100%;
+    justify-content: space-around;
+    padding-top: 4px;
+  }
+}
+
+/* ── Semester footer: column stack on mobile ────────────────────────────── */
+.semester-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.semester-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+@media (max-width: 767px) {
+  .semester-footer {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 16px;
+    gap: 14px;
+  }
+  .semester-footer-right {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
   }
 }
