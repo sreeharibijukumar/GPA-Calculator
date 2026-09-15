@@ -1,0 +1,282 @@
+course_code,course_name,regulation_code,semester_number,subject_code,subject_name,credits,aliases
+CSE,Computer Science and Engineering,R23,1,23A52201T,Communicative English,2,"CE, ENG"
+CSE,Computer Science and Engineering,R23,1,23A51202T,Chemistry,3,CHE
+CSE,Computer Science and Engineering,R23,1,23A54101,Linear Algebra & Calculus,3,"LAC, M1"
+CSE,Computer Science and Engineering,R23,1,23A01201T,Basic Civil & Mechanical Engineering,3,BCME
+CSE,Computer Science and Engineering,R23,1,23A05101T,Introduction to Programming,3,ITP
+CSE,Computer Science and Engineering,R23,1,23A52201P,Communicative English Lab,1,CE Lab
+CSE,Computer Science and Engineering,R23,1,23A51202P,Chemistry Lab,1,CHE Lab
+CSE,Computer Science and Engineering,R23,1,23A03201,Engineering Workshop,1.5,EW
+CSE,Computer Science and Engineering,R23,1,23A05101P,Computer Programming Lab,1.5,CP Lab
+CSE,Computer Science and Engineering,R23,1,23A99201,Health and wellness Yoga and Sports,0.5,HWYS
+CSE,Computer Science and Engineering,R23,2,23A56101T,Engineering Physics,3,EP
+CSE,Computer Science and Engineering,R23,2,23A54201,Differential Equations & Vector Calculus,3,"DEVC, M2"
+CSE,Computer Science and Engineering,R23,2,23A02101T,Basic Electrical & Electronics Engineering,3,BEEE
+CSE,Computer Science and Engineering,R23,2,23A03101T,Engineering Graphics,3,EG
+CSE,Computer Science and Engineering,R23,2,23A05102,IT Workshop,1,ITW
+CSE,Computer Science and Engineering,R23,2,23A05201T,Data Structures,3,DS
+CSE,Computer Science and Engineering,R23,2,23A56101P,Engineering Physics Lab,1,EP Lab
+CSE,Computer Science and Engineering,R23,2,23A02101P,Electrical & Electronics Engineering Workshop,1.5,EEE
+CSE,Computer Science and Engineering,R23,2,23A05201P,Data Structures Lab,1.5,DS Lab
+CSE,Computer Science and Engineering,R23,2,23A99101,NSS/NCC/Scouts & Guides/Community Service,0.5,"NSS, NCC"
+CSE,Computer Science and Engineering,R23,3,23A54301,Discrete Mathematics & Graph Theory,3,"DMGT, M3"
+CSE,Computer Science and Engineering,R23,3,23A52301,Universal Human Values 2- Understanding Harmony and Ethical human conduct,3,UHV
+CSE,Computer Science and Engineering,R23,3,23A30402,Digital Logic and Computer Organization,3,DLCO
+CSE,Computer Science and Engineering,R23,3,23A05302T,Advanced Data Structures & Algorithms Analysis,3,ADSA
+CSE,Computer Science and Engineering,R23,3,23A05303T,Object-Oriented Programming Through JAVA,3,"OOPJ, JAVA"
+CSE,Computer Science and Engineering,R23,3,23A05302P,Advanced Data Structures and Algorithms Analysis Lab,1.5,ADSA Lab
+CSE,Computer Science and Engineering,R23,3,23A05303P,Object-Oriented Programming Through JAVA Lab,1.5,JAVA Lab
+CSE,Computer Science and Engineering,R23,3,23A05304,Python programming,2,Python
+CSE,Computer Science and Engineering,R23,3,23A99301,Environmental Science,0,EVS
+CSE,Computer Science and Engineering,R23,4,23A52402a,Managerial Economics and Financial Analysis,2,MEFA
+CSE,Computer Science and Engineering,R23,4,23A54401,Probability & Statistics,3,"PS, M4"
+CSE,Computer Science and Engineering,R23,4,23A35401T,Operating Systems,3,OS
+CSE,Computer Science and Engineering,R23,4,23A05402T,Database Management Systems,3,DBMS
+CSE,Computer Science and Engineering,R23,4,23A05403,Software Engineering,3,SE
+CSE,Computer Science and Engineering,R23,4,23A35401P,Operating Systems Lab,1.5,OS Lab
+CSE,Computer Science and Engineering,R23,4,23A05402P,Database Management Systems Lab,1.5,DBMS Lab
+CSE,Computer Science and Engineering,R23,4,23A05404,Full Stack Development - I,2,"FSD-1, FSD I"
+CSE,Computer Science and Engineering,R23,4,23A99401,Design Thinking & Innovation,0,DT
+CSE,Computer Science and Engineering,R23,5,23A31301T,Artificial Intelligence,3,AI
+CSE,Computer Science and Engineering,R23,5,23A05501T,Computer Networks & Internet Protocols,3,"CN, CNIP"
+CSE,Computer Science and Engineering,R23,5,23A05502,Automata Theory and Compiler Design,3,"ATCD, CD"
+CSE,Computer Science and Engineering,R23,5,23A05503,Introduction To Quantum Technologies And Applications,3,QTA
+CSE,Computer Science and Engineering,R23,5,23A05504a,Professional Elective-I (Object Oriented Analysis and Design),3,"PE-1, OOAD"
+CSE,Computer Science and Engineering,R23,5,23A03505,Open Elective-I (Sustainable Energy Technologies),3,"OE-1, SET"
+CSE,Computer Science and Engineering,R23,5,23A31301P,Artificial Intelligence Lab,1.5,AI Lab
+CSE,Computer Science and Engineering,R23,5,23A05501P,Computer Networks & Internet Protocols Lab,1.5,CN Lab
+CSE,Computer Science and Engineering,R23,5,23A05506,Full Stack Development - II,2,"FSD-2, FSD II"
+CSE,Computer Science and Engineering,R23,5,23A03508,Tinkering Lab,1,T Lab
+CSE,Computer Science and Engineering,R23,5,23A05507,Evaluation of Community Service Internship,2,"CSP, CSI"
+CSE,Computer Science and Engineering,R23,6,23A31401T,Machine Learning,3,ML
+CSE,Computer Science and Engineering,R23,6,23A37501T,Cloud Computing,3,CC
+CSE,Computer Science and Engineering,R23,6,23A05601T,Cryptography & Network Security,3,CNS
+CSE,Computer Science and Engineering,R23,6,23A38502,Professional Elective-II (Cyber Security),3,"PE-2, ICS"
+CSE,Computer Science and Engineering,R23,6,23A05603b,Professional Elective-III (Mobile Adhoc Networks),3,"PE-3, MANET"
+CSE,Computer Science and Engineering,R23,6,23A01606b,Open Elective-II (Sustainability Engineering Pratices),3,"OE-2, SEP"
+CSE,Computer Science and Engineering,R23,6,23A31401P,Machine Learning Lab,1.5,ML Lab
+CSE,Computer Science and Engineering,R23,6,23A05601P,Cryptography & Network Security Lab,1.5,CNS Lab
+CSE,Computer Science and Engineering,R23,6,23A52501,Soft skills,2,SS
+CSE,Computer Science and Engineering,R23,6,23A52601,Technical Paper Writing & IPR,0,"TPW, IPR"
+CSE,Computer Science and Engineering,R23,6,23A05604,Workshop,0,WRK
+CSE,Computer Science and Engineering,R23,7,23A30602T,Deep Learning,3,DL
+CSE,Computer Science and Engineering,R23,7,23A52701a,Management Course- II (Business Ethics and Corporate Governance),2,"MC-2, BECG"
+CSE,Computer Science and Engineering,R23,7,23A35501T,Professional Elective-IV (Internet Of Things),3,"PE-4, IOT"
+CSE,Computer Science and Engineering,R23,7,23A05702a,Professional Elective-V (Agile Methodologies),3,"PE-5, AGM"
+CSE,Computer Science and Engineering,R23,7,23A02704,Open Elective-III (Smart Gird Technologies),3,"OE-3, SGT"
+CSE,Computer Science and Engineering,R23,7,23A01705b,Open Elective-IV (Solid Waste Management),3,"OE-4, SWM"
+CSE,Computer Science and Engineering,R23,7,23A05703,Skill Enhancement Course: Prompt Engineering,2,PE Lab
+CSE,Computer Science and Engineering,R23,7,23A52702,Audit Course: Gender Sensitization,0,Audit
+CSE,Computer Science and Engineering,R23,7,23A05704,Evaluation of Industry Internship,2,Industry
+CSE,Computer Science and Engineering,R23,8,23A05801,Internship,4,Intern
+CSE,Computer Science and Engineering,R23,8,23A05802,Project,8,Project
+CSE,Computer Science and Engineering,R20,1,20A54101,Linear Algebra and Calculus,3,"LAC, M1"
+CSE,Computer Science and Engineering,R20,1,20A51101T,Chemistry,3,CHE
+CSE,Computer Science and Engineering,R20,1,20A05201T,C-Programming & Data Structures,3,CPDS
+CSE,Computer Science and Engineering,R20,1,20A02101T,Basic Electrical & Electronics Engineering,3,BEEE
+CSE,Computer Science and Engineering,R20,1,20A03202,Engineering Workshop,1.5,EWS
+CSE,Computer Science and Engineering,R20,1,20A05202,IT Workshop,1.5,ITW
+CSE,Computer Science and Engineering,R20,1,20A51101P,Chemistry Lab,1.5,CHE Lab
+CSE,Computer Science and Engineering,R20,1,20A05201P,C-Programming & Data Structures Lab,1.5,CPDS Lab
+CSE,Computer Science and Engineering,R20,1,20A02101P,Basic Electrical & Electronics Engineering Lab,1.5,BEEE Lab
+CSE,Computer Science and Engineering,R20,2,20A54202,Probability & Statistics,3,"PS, M2"
+CSE,Computer Science and Engineering,R20,2,20A56201T,Applied Physics,3,AP
+CSE,Computer Science and Engineering,R20,2,20A52101T,Communicative English,3,"CE, ENG"
+CSE,Computer Science and Engineering,R20,2,20A05101T,Python Programming & Data Science,3,"PPDS, Python"
+CSE,Computer Science and Engineering,R20,2,20A03101T,Engineering Drawing,2,ED
+CSE,Computer Science and Engineering,R20,2,20A03101P,Engineering Graphics Lab,1,EG Lab
+CSE,Computer Science and Engineering,R20,2,20A52101P,Communicative English Lab,1.5,"CE Lab, ENG Lab"
+CSE,Computer Science and Engineering,R20,2,20A56201P,Applied Physics Lab,1.5,AP Lab
+CSE,Computer Science and Engineering,R20,2,20A05101P,Python Programming & Data Science Lab,1.5,PPDS Lab
+CSE,Computer Science and Engineering,R20,3,20A54304,Discrete Mathematics & Graph Theory,3,"DMGT, M3"
+CSE,Computer Science and Engineering,R20,3,20A04304T,Digital Electronics & Microprocessors,3,DEMP
+CSE,Computer Science and Engineering,R20,3,20A05301T,Advanced Data Structures & Algorithms,3,ADSA
+CSE,Computer Science and Engineering,R20,3,20A05302T,Object Oriented Programming Through Java,3,"OOPJ, Java"
+CSE,Computer Science and Engineering,R20,3,20A05303,Computer Organization,3,CO
+CSE,Computer Science and Engineering,R20,3,20A04304P,Digital Electronics & Microprocessors Lab,1.5,DEMP Lab
+CSE,Computer Science and Engineering,R20,3,20A05301P,Advanced Data Structures and Algorithms Lab,1.5,ADSA Lab
+CSE,Computer Science and Engineering,R20,3,20A05302P,Object Oriented Programming Through Java Lab,1.5,Java Lab
+CSE,Computer Science and Engineering,R20,3,20A52201,Universal Human Values,3,UHV
+CSE,Computer Science and Engineering,R20,3,20A05304,Skill Oriented Course - I (Web Application Development),2,"WAD, SOC-1"
+CSE,Computer Science and Engineering,R20,4,20A54404,Deterministic & Stochastic Statistical Methods,3,"DSSM, M4"
+CSE,Computer Science and Engineering,R20,4,20A05401T,Database Management Systems,3,DBMS
+CSE,Computer Science and Engineering,R20,4,20A05402T,Operating Systems,3,OS
+CSE,Computer Science and Engineering,R20,4,20A05403T,Software Engineering,3,SE
+CSE,Computer Science and Engineering,R20,4,20A52301,Humanities Elective - I (Managerial Economics & Financial Analysis),3,"MEFA, HE-1"
+CSE,Computer Science and Engineering,R20,4,20A05401P,Database Management Systems Lab,1.5,DBMS Lab
+CSE,Computer Science and Engineering,R20,4,20A05402P,Operating Systems Lab,1.5,OS Lab
+CSE,Computer Science and Engineering,R20,4,20A05403P,Software Engineering Lab,1.5,SE Lab
+CSE,Computer Science and Engineering,R20,4,20A05404,Skill Oriented Course - II (Exploratory Data Analysis with R),2,"EDA-R, SOC-2"
+CSE,Computer Science and Engineering,R20,4,20A99401,Mandatory Non-Credit Course: Design Thinking for Innovation,0,"DT, DTI"
+CSE,Computer Science and Engineering,R20,4,20A99301,NSS/NCC/NSO Activities,0,"NSS, NCC"
+CSE,Computer Science and Engineering,R20,5,20A05501T,Computer Networks,3,CN
+CSE,Computer Science and Engineering,R20,5,20A05502T,Artificial Intelligence,3,AI
+CSE,Computer Science and Engineering,R20,5,20A05503,Formal Languages and Automata Theory,3,FLAT
+CSE,Computer Science and Engineering,R20,5,20A05504a,Professional Elective Course - I (Software Project Management),3,"PE-1, SPM"
+CSE,Computer Science and Engineering,R20,5,20A01505,Open Elective Course - I (Building Technology),3,"OE-1, BT"
+CSE,Computer Science and Engineering,R20,5,20A05501P,Computer Networks Lab,1.5,CN Lab
+CSE,Computer Science and Engineering,R20,5,20A05502P,Artificial Intelligence Lab,1.5,AI Lab
+CSE,Computer Science and Engineering,R20,5,20A05506,Skill Oriented Course - III (Advanced Web Application Development),2,"AWAD, SOC-3"
+CSE,Computer Science and Engineering,R20,5,20A05507,Evaluation of Community Service Project,1.5,CSP
+CSE,Computer Science and Engineering,R20,5,20A99201,Mandatory Non-Credit Course: Environmental Science,0,"ES, EVS"
+CSE,Computer Science and Engineering,R20,6,20A05601T,Compiler Design,3,CD
+CSE,Computer Science and Engineering,R20,6,20A05602T,Machine Learning,3,ML
+CSE,Computer Science and Engineering,R20,6,20A05603T,Internet of Things,3,IoT
+CSE,Computer Science and Engineering,R20,6,20A05604a,Professional Elective Course - II (Software Testing),3,"PE-2, ST"
+CSE,Computer Science and Engineering,R20,6,20A01605,Open Elective Course - II (Environmental Economics),3,"OE-2, EE"
+CSE,Computer Science and Engineering,R20,6,20A05601P,Compiler Design Lab,1.5,CD Lab
+CSE,Computer Science and Engineering,R20,6,20A05602P,Machine Learning Lab,1.5,ML Lab
+CSE,Computer Science and Engineering,R20,6,20A05603P,Internet of Things Lab,1.5,IoT Lab
+CSE,Computer Science and Engineering,R20,6,20A52401,Skill Oriented Course - IV (Soft Skills),2,"SS, SOC-4"
+CSE,Computer Science and Engineering,R20,6,20A99601,Mandatory Non-Credit Course: Intellectual Property Rights & Patents,0,IPR
+CSE,Computer Science and Engineering,R20,7,20A05701a,Professional Elective Course - III (Cloud Computing),3,"PE-3, CC"
+CSE,Computer Science and Engineering,R20,7,20A05702a,Professional Elective Course - IV (Fundamentals of AR/VR),3,"PE-4, ARVR"
+CSE,Computer Science and Engineering,R20,7,20A05703a,Professional Elective Course - V (Full Stack Development),3,"PE-5, FSD"
+CSE,Computer Science and Engineering,R20,7,20A52701a,Humanities Elective - II (Entrepreneurship and Incubation),3,"HE-2, EI"
+CSE,Computer Science and Engineering,R20,7,20A01704,Open Elective Course - III (Cost Effective Housing Techniques),3,OE-3
+CSE,Computer Science and Engineering,R20,7,20A01705,Open Elective Course - IV (Health Safety & Environmental Management),3,OE-4
+CSE,Computer Science and Engineering,R20,7,20A05706,Skill Oriented Course - V (Mobile Application Development),2,"MAD, SOC-5"
+CSE,Computer Science and Engineering,R20,7,20A05707,Evaluation of Industry Internship,3,Industry
+CSE,Computer Science and Engineering,R20,8,20A05801,Full Internship & Project work,12,Project
+ECE,Electronics and Communication Engineering,R23,1,23A56101T,Engineering Physics,3,EP
+ECE,Electronics and Communication Engineering,R23,1,23A54101,Linear Algebra & Calculus,3,"LAC, M1"
+ECE,Electronics and Communication Engineering,R23,1,23A02101T,Basic Electrical & Electronics Engineering,3,BEEE
+ECE,Electronics and Communication Engineering,R23,1,23A03101T,Engineering Graphics,3,EG
+ECE,Electronics and Communication Engineering,R23,1,23A05101T,Introduction to Programming,3,ITP
+ECE,Electronics and Communication Engineering,R23,1,23A05102,IT Workshop,1,ITW
+ECE,Electronics and Communication Engineering,R23,1,23A56101P,Engineering Physics Lab,1,EP Lab
+ECE,Electronics and Communication Engineering,R23,1,23A02101P,Electrical & Electronics Engineering Workshop,1.5,EEE Workshop
+ECE,Electronics and Communication Engineering,R23,1,23A05101P,Computer Programming Lab,1.5,CP Lab
+ECE,Electronics and Communication Engineering,R23,1,23A99101,NSS/NCC/Scouts & Guides/Community Service,0.5,"NSS, NCC"
+ECE,Electronics and Communication Engineering,R23,2,23A52201T,Communicative English,2,CE
+ECE,Electronics and Communication Engineering,R23,2,23A51202T,Chemistry,3,CHE
+ECE,Electronics and Communication Engineering,R23,2,23A54201,Differential Equations & Vector Calculus,3,"DEVC, M2"
+ECE,Electronics and Communication Engineering,R23,2,23A01201T,Basic Civil & Mechanical Engineering,3,BCME
+ECE,Electronics and Communication Engineering,R23,2,23A04201T,Network Analysis,3,NA
+ECE,Electronics and Communication Engineering,R23,2,23A52201P,Communicative English Lab,1,CE Lab
+ECE,Electronics and Communication Engineering,R23,2,23A51202P,Chemistry Lab,1,CHE Lab
+ECE,Electronics and Communication Engineering,R23,2,23A03201,Engineering Workshop,1.5,EW
+ECE,Electronics and Communication Engineering,R23,2,23A04201P,Network Analysis And Simulation Laboratory,1.5,NA Lab
+ECE,Electronics and Communication Engineering,R23,2,23A99201,Health and wellness Yoga and Sports,0.5,HWYS
+ECE,Electronics and Communication Engineering,R23,3,23A54302,Probability and Complex Variables,3,"PCV, M3"
+ECE,Electronics and Communication Engineering,R23,3,23A52301,Universal Human Values- Understanding Harmony and Ethical Human Conduct,3,UHV
+ECE,Electronics and Communication Engineering,R23,3,23A04301,Signals Systems and Stochastic Processes,3,SSSP
+ECE,Electronics and Communication Engineering,R23,3,23A04302T,Electronic Devices and Circuits,3,EDC
+ECE,Electronics and Communication Engineering,R23,3,23A04303T,Digital Circuits Design,3,DCD
+ECE,Electronics and Communication Engineering,R23,3,23A04302P,Electronic Devices and Circuits Lab,1.5,EDC Lab
+ECE,Electronics and Communication Engineering,R23,3,23A04303P,Digital Circuits & Signal Simulation Lab,1.5,DCSS Lab
+ECE,Electronics and Communication Engineering,R23,3,23A05304,Python Programming,2,Python
+ECE,Electronics and Communication Engineering,R23,3,23A99301,Environmental Science,0,EVS
+ECE,Electronics and Communication Engineering,R23,4,23A52402a,Managerial Economics and Financial Analysis,2,MEFA
+ECE,Electronics and Communication Engineering,R23,4,23A04401,Linear Control Systems,3,LCS
+ECE,Electronics and Communication Engineering,R23,4,23A04402,EM Waves and Transmission Lines,3,EMWTL
+ECE,Electronics and Communication Engineering,R23,4,23A04403T,Electronic Circuits Analysis,3,ECA
+ECE,Electronics and Communication Engineering,R23,4,23A04404T,Analog and Digital Communications,3,ADC
+ECE,Electronics and Communication Engineering,R23,4,23A04403P,Electronic Circuits Analysis Lab,1.5,ECA Lab
+ECE,Electronics and Communication Engineering,R23,4,23A04404P,Analog and Digital Communications Lab,1.5,ADC Lab
+ECE,Electronics and Communication Engineering,R23,4,23A52403,Soft Skills,2,SS
+ECE,Electronics and Communication Engineering,R23,4,23A99401,Design Thinking and Innovation,2,DT
+ECE,Electronics and Communication Engineering,R23,5,23A04501T,Analog and Digital IC Applications,3,ADICA
+ECE,Electronics and Communication Engineering,R23,5,23A04502,Antennas & Wave Propagation,3,AWP
+ECE,Electronics and Communication Engineering,R23,5,23A04503T,Microprocessors and Microcontrollers,3,MPMC
+ECE,Electronics and Communication Engineering,R23,5,23A05503,Introduction To Quantum Technologies And Applications,3,QTA
+ECE,Electronics and Communication Engineering,R23,5,23A04504a,Professional Elective-I (Computer Architecture & Organization),3,"PE-1, CAO"
+ECE,Electronics and Communication Engineering,R23,5,23A01505a,Open Elective-I (Green Buildings),3,OE-1
+ECE,Electronics and Communication Engineering,R23,5,23A04501P,Analog & Digital IC Applications Lab,1.5,ADICA Lab
+ECE,Electronics and Communication Engineering,R23,5,23A04503P,Microprocessors and Microcontrollers Lab,1.5,MPMC Lab
+ECE,Electronics and Communication Engineering,R23,5,23A04506,Skill Enhancement course: PCB Design and Prototype development,2,PCB
+ECE,Electronics and Communication Engineering,R23,5,23A03508,Tinkering Lab,1,T Lab
+ECE,Electronics and Communication Engineering,R23,5,23A04507,Evaluation of Community Service Internship,2,CSI
+ECE,Electronics and Communication Engineering,R23,6,23A04601,Digital Signal Processing,3,DSP
+ECE,Electronics and Communication Engineering,R23,6,23A04602T,Microwave and Optical Communications,3,MOC
+ECE,Electronics and Communication Engineering,R23,6,23A04603T,VLSI Design,3,VLSI
+ECE,Electronics and Communication Engineering,R23,6,23A04604a,Professional Elective-II (Electronic Measurements and Instrumentation),3,"PE-2, EMI"
+ECE,Electronics and Communication Engineering,R23,6,23A04605a,Professional Elective-III (Digital Image Processing),3,"PE-3, DIP"
+ECE,Electronics and Communication Engineering,R23,6,23A01606a,Open Elective-II (Disaster Management),3,OE-2
+ECE,Electronics and Communication Engineering,R23,6,23A04602P,Microwave and Optical Communications Lab,1.5,MOC Lab
+ECE,Electronics and Communication Engineering,R23,6,23A04603P,VLSI Design Lab,1.5,VLSI Lab
+ECE,Electronics and Communication Engineering,R23,6,23A04607,Skill Enhancement course: Machine Learning and DSP,2,ML DSP
+ECE,Electronics and Communication Engineering,R23,6,23A52601,Technical Paper Writing & IPR,0,TPW
+ECE,Electronics and Communication Engineering,R23,6,23A04608,Workshop,0,WRK
+ECE,Electronics and Communication Engineering,R23,7,23A04701,Data Communications and Networking,3,DCN
+ECE,Electronics and Communication Engineering,R23,7,23A52701a,Management Course-II (Business Ethics and Corporate Governance),2,"MC-2, BECG"
+ECE,Electronics and Communication Engineering,R23,7,23A04702a,Professional Elective-IV (Radar Engineering),3,"PE-4, RE"
+ECE,Electronics and Communication Engineering,R23,7,23A04703a,Professional Elective-V (Low Power VLSI Design),3,"PE-5, LPVLSI"
+ECE,Electronics and Communication Engineering,R23,7,23A01704a,Open Elective-III (Building Materials and Services),3,OE-3
+ECE,Electronics and Communication Engineering,R23,7,23A01704b,Open Elective-IV (Environmental Impact Assessment),3,OE-4
+ECE,Electronics and Communication Engineering,R23,7,23A04705a,Skill Enhancement course: RF System Design tools,2,RF Tools
+ECE,Electronics and Communication Engineering,R23,7,23A52702,Audit Course: Gender Sensitization,0,GS
+ECE,Electronics and Communication Engineering,R23,7,23A04706,Evaluation of Industry Internship,2,Industry Internship
+ECE,Electronics and Communication Engineering,R23,8,23A04801,Internship,4,Intern
+ECE,Electronics and Communication Engineering,R23,8,23A04802,Project,8,Project
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A56101T,Engineering Physics,3,EP
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A54101,Linear Algebra & Calculus,3,"LAC, M1"
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A02101T,Basic Electrical & Electronics Engineering,3,BEEE
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A03101T,Engineering Graphics,3,EG
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A05101T,Introduction to Programming,3,ITP
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A05102,IT Workshop,1,ITW
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A56101P,Engineering Physics Lab,1,EP Lab
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A02101P,Electrical & Electronics Engineering Workshop,1.5,EEE Workshop
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A05101P,Computer Programming Lab,1.5,CP Lab
+AIML,Artificial Intelligence and Machine Learning,R23,1,23A99101,NSS/NCC/Scouts & Guides/Community Service,0.5,"NSS, NCC"
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A52201T,Communicative English,2,CE
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A51202T,Chemistry,3,CHE
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A54201,Differential Equations & Vector Calculus,3,"DEVC, M2"
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A01201T,Basic Civil & Mechanical Engineering,3,BCME
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A05201T,Data Structures,3,DS
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A52201P,Communicative English Lab,1,CE Lab
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A51202P,Chemistry Lab,1,CHE Lab
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A03201,Engineering Workshop,1.5,EW
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A05201P,Data Structures Lab,1.5,DS Lab
+AIML,Artificial Intelligence and Machine Learning,R23,2,23A99201,Health and wellness Yoga and Sports,0.5,HWYS
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A54301,Discrete Mathematics & Graph Theory,3,"DMGT, M3"
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A52301,Universal Human Values 2- Understanding Harmony and Ethical human conduct,3,UHV
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A31301T,Artificial Intelligence,3,AI
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A05302T,Advanced Data Structures & Algorithms Analysis,3,ADSA
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A05303T,Object-Oriented Programming Through JAVA,3,"OOPJ, Java"
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A05302P,Advanced Data Structures and Algorithms Analysis Lab,1.5,ADSA Lab
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A05303P,Object-Oriented Programming Through JAVA Lab,1.5,Java Lab
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A05304,Python programming,2,Python
+AIML,Artificial Intelligence and Machine Learning,R23,3,23A99301,Environmental Science,0,EVS
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A52402e,Optimization Techniques,2,OPT
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A54401,Probability & Statistics,3,"PS, M4"
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A31401T,Machine Learning,3,ML
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A05402T,Database Management Systems,3,DBMS
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A30402,Digital Logic and Computer Organization,3,DLCO
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A31403,AI & ML Lab,1.5,AI ML Lab
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A05402P,Database Management Systems Lab,1.5,DBMS Lab
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A52401,Full Stack Development-1,2,FSD-1
+AIML,Artificial Intelligence and Machine Learning,R23,4,23A99401,Design Thinking & Innovation,2,DT
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A39501,Applied Machine Learning,3,AML
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A39502,Data Wrangling & Preprocessing,3,DWP
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A31501,Natural Language Processing,3,NLP
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A05503,Introduction To Quantum Technologies And Applications,3,QTA
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A30503a,Professional Elective-I (Data Visualization),3,"PE-1, DV"
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A01505a,Open Elective- I (Green Buildings),3,OE-1
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A39504,Machine Learning & NLP Lab,1.5,ML NLP Lab
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A39505,Data Wrangling Lab,1.5,DW Lab
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A05506,Skill Enhancement course: Full Stack Development - II,2,FSD-2
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A03508,Tinkering Lab,1,T Lab
+AIML,Artificial Intelligence and Machine Learning,R23,5,23A39506,Community Service Internship,2,CSI
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A39601,Advanced Machine Learning,3,Adv ML
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A31702a,Explainable AI & Model Interpretability,3,XAI
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A39602,AI for Edge Computing,3,AI Edge
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A31603a,Professional Elective-II (Graph Neural Networks),3,"PE-2, GNN"
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A32603,Professional Elective-III (Introduction to Quantum Computing),3,"PE-3, QC"
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A01606a,Open Elective - II (Disaster Management),3,OE-2
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A39604,ML Model Optimization Lab,1.5,MLOpt Lab
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A39605,Edge Computing Lab,1.5,Edge Lab
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A52501,Skill Enhancement course: Soft Skills,2,SS
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A52601,Audit Course: Technical Paper Writing & IPR,0,TPW
+AIML,Artificial Intelligence and Machine Learning,R23,6,23A39606,Workshop,0,WRK
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A31701,Generative AI & Prompt Engineering,3,GenAI
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A52701a,Management Course- II (Business Ethics and Corporate Governance),2,"MC-2, BECG"
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A31702b,Professional Elective-IV (AI for Robotics),3,"PE-4, AIR"
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A39702,Professional Elective-V (Smart Systems),3,"PE-5, SS"
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A01704a,Open Elective-III (Building Materials and Services),3,OE-3
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A01704b,Open Elective-IV (Environmental Impact Assessment),3,OE-4
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A05703,Skill Enhancement Course: Prompt Engineering,2,PE Lab
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A52702,Audit Course: Gender Sensitization,0,GS
+AIML,Artificial Intelligence and Machine Learning,R23,7,23A39703,Evaluation of Industry Internship,2,Industry Internship
+AIML,Artificial Intelligence and Machine Learning,R23,8,23A39801,Internship,4,Intern
+AIML,Artificial Intelligence and Machine Learning,R23,8,23A39802,Project,8,Project

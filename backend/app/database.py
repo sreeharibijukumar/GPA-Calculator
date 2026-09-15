@@ -1,13 +1,17 @@
+import logging
 import os
 from contextlib import contextmanager
+from pathlib import Path
 from typing import Generator
-from dotenv import load_dotenv
 
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, event, text
 from sqlalchemy.orm import DeclarativeBase, Session, sessionmaker
 from sqlalchemy.pool import QueuePool
 
 load_dotenv()
+
+log = logging.getLogger(__name__)
 
 # Neon/Supabase provide "postgres://" URLs; SQLAlchemy 1.4+ requires "postgresql://"
 DATABASE_URL: str = os.environ["DATABASE_URL"]
@@ -63,15 +67,30 @@ def get_db_context() -> Generator[Session, None, None]:
     finally:
         db.close()
 
+# Default CSV path — bundled alongside the app package.
+_SEED_CSV: Path = Path(__file__).parent / "data" / "courses_master.csv"
+
 def init_db() -> None:
-    # Called once during FastAPI's lifespan startup event.
-    # Safe to call repeatedly — create_all() is idempotent.
-    from app import models
+    """
+    Called once during FastAPI's lifespan startup event.
+
+    Steps:
+      1. ``create_all`` — idempotently creates missing tables.
+      2. CSV seeder — skipped gracefully if the CSV file is absent (e.g. CI).
+    """
+    from app import models  # noqa: F401  — registers all ORM metadata
     Base.metadata.create_all(bind=engine)
 
-    from app.seed_data import seed_course_structure
-    with get_db_context() as db:
-        seed_course_structure(db)
+    if _SEED_CSV.exists():
+        from app.seed_data import seed_from_csv
+        with get_db_context() as db:
+            seed_from_csv(db, _SEED_CSV)
+    else:
+        log.warning(
+            "Seed CSV not found at %s — skipping course seeding. "
+            "Run ``python scripts/seed_from_csv.py`` to seed manually.",
+            _SEED_CSV,
+        )
 
 def check_db_health() -> bool:
     try:
