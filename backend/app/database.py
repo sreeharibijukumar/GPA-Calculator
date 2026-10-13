@@ -70,6 +70,11 @@ def get_db_context() -> Generator[Session, None, None]:
 # Default CSV path — bundled alongside the app package.
 _SEED_CSV: Path = Path(__file__).parent / "data" / "courses_master.csv"
 
+# Seeding is OFF by default. Set SEED_ON_STARTUP=true only for a deliberate
+# one-off seed run; leave it unset on Render for normal operation.
+SEED_ON_STARTUP: bool = os.getenv("SEED_ON_STARTUP", "false").lower() == "true"
+
+
 def init_db() -> None:
     """
     Called once during FastAPI's lifespan startup event.
@@ -81,17 +86,20 @@ def init_db() -> None:
     from app import models  # noqa: F401  — registers all ORM metadata
     Base.metadata.create_all(bind=engine)
 
-    if _SEED_CSV.exists():
-        from app.seed_data import seed_from_csv
-        with get_db_context() as db:
-            seed_from_csv(db, _SEED_CSV)
-    else:
-        log.warning(
-            "Seed CSV not found at %s — skipping course seeding. "
-            "Run ``python scripts/seed_from_csv.py`` to seed manually.",
-            _SEED_CSV,
-        )
+    if not SEED_ON_STARTUP:
+        log.info("SEED_ON_STARTUP is off — skipping course seeding.")
+        return
 
+    if not _SEED_CSV.exists():
+        log.warning("Seed CSV not found at %s — skipping.", _SEED_CSV)
+        return
+
+    from app.seed_data import seed_from_csv
+    with get_db_context() as db:
+        stats = seed_from_csv(db, _SEED_CSV)
+    log.info("Course seed finished: %s", stats)
+
+    
 def check_db_health() -> bool:
     try:
         with engine.connect() as conn:
